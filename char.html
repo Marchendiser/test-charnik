@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Char-Test</title>
+    <link rel="stylesheet" href="char.css">
+</head>
+<body>
+    <div>
+        <header></header>
+    </div>
+    <div id="info"> <!-- основная инфа-->
+        <label for="name">Имя:
+            <input type="text" name="name" placeholder="Имя" id="name"></label>
+        <label for="name">Раса:
+            <input type="text" name="race" placeholder="Раса" id="race"></label>
+        <label for="name">Класс и Уровень:
+            <input type="text" name="claslvl" placeholder="Класс и Уровень" id="claslvl"></label>
+        <label for="name">Возраст:
+            <input type="text" name="age" placeholder="Возраст" id="age"></label>
+        <label for="name">Мировоззрение:
+            <input type="text" name="alignment" placeholder="Мировоззрение" id="alignment"></label>
+        <label for="name">Опыт:
+            <input type="text" name="exp" placeholder="Опыт" id="exp"></label>
+    </div>
+    <div id="statwrap" class=""> <!-- статус персонажа-->
+        <div id="status">
+            <div class="status">
+                <p contenteditable="true">10</p>
+                <h2>КД</h2>
+            </div>
+            <div class="status">
+                <p contenteditable="true">30</p>
+                <h2>Скорость</h2>
+            </div>
+            <div class="status">
+                <p id="initiative">0</p>
+                <h2>Инициатива</h2>            
+            </div>
+            <div class="status">
+                <p><span contenteditable="true">0</span><span>/</span><span contenteditable="true">0</span></p>
+                <h2>Текущие хиты</h2>
+            </div>
+            <div class="status">
+                <p contenteditable="true">0</p>
+                <h2>Временные хиты</h2>
+            </div>
+            <div class="status">
+                <p><input type="text" name="hitdie" placeholder="1d8"></p>
+                <h2>Кости хитов</h2>
+            </div>
+            <div class="desaves">
+                <div id="suc">Успехи:<input type="checkbox" class="desuc"><input type="checkbox" class="desuc"><input type="checkbox" class="desuc"></div>
+                <div id="fail">Провалы:<input type="checkbox" class="defail"><input type="checkbox" class="defail"><input type="checkbox" class="defail"></div>
+                <h1 id="desaves">Спасброски от смерти</h1>
+            </div>
+            <div>
+                <button id="showspell" onclick="showspell()">Заклинания</button> <!-- переключение на лист с заклинаниями-->
+            </div>
+        </div>
+    </div>
+    <div id="caststat" class="hidden"> <!-- заклинательные бонусы-->
+        <div id="status">
+            <div class="status">
+                <p><input type="text" class="castclass"></p>
+                <h2>Класс заклинателя</h2>
+            </div>
+            <div class="status">
+                <p><select name="castab" id="castab">
+                    <option value="Интеллект">Интеллект</option>
+                    <option value="Интеллект">Мудрость</option>
+                    <option value="Интеллект">Харизма</option>
+                </select></p>
+                <h2>Базовая характеристика</h2>
+            </div>
+            <div class="status">
+                <p>8</p>
+                <h2>Сложность спасброска</h2>            
+            </div>
+            <div class="status">
+                <p>0</p>
+                <h2>Бонус атаки заклинанием</h2>
+            </div>
+            <div>
+                <button id="showlist" onclick="showlist()">Лист персонажа</button>
+            </div>
+        </div>
+    </div>
+    <div id="content" class="container"> <!-- основной лист пероснажа-->
+        <div id="abilities">
+            <div class="ability"> <!-- характеристики-->
+                <h2 align="center">Сила</h2>
+                <input class="abscore" type="text" id="strscore">
+                <p class="mod" align="center" id="strmod">0</p>
+            </div>
+            <div class="ability">
+                <h2 align="center">Ловкость</h2>
+                <input class="abscore" type="text" id="dexscore">
+                <p class="mod" align="center" id="dexmod">0</p>
+            </div>
+            <div class="ability">
+                <h2 align="center">Телосложение</h2>
+                <input class="abscore" type="text" id="conscore">
+                <p class="mod" align="center" id="conmod">0</p>
+            </div>
+            <div class="ability">
+                <h2 align="center">Интеллект</h2>
+                <input class="abscore" type="text" id="intscore">
+                <p class="mod" align="center" id="intmod">0</p>
+            </div>
+            <div class="ability">
+                <h2 align="center">Мудрость</h2>
+                <input class="abscore" type="text" id="wisscore">
+                <p class="mod" align="center" id="wismod">0</p>
+            </div>
+            <div class="ability">
+                <h2 align="center">Харизма</h2>
+                <input class="abscore" type="text" id="chascore">
+                <p class="mod" align="center" id="chamod">0</p>
+            </div>
+        </div>
+        <div>
+            <div id="profbonus"> <!-- бонус мастерства-->
+                <h1 class="title">Бонус мастерства</h1>
+                <h2 onclick="bonusup()" align="center">+<span id="bonusnumber">2</span></h2>
+            </div>
+            <div id="saves"> <!-- спасы-->
+                <h1 class="title">Спасброски</h1>
+                <div><input type="checkbox" id="strsaveprof" class="prof">Сила <span id="strsave">0</span></div>
+                <div><input type="checkbox" class="prof">Ловкость <span id="dexsave">0</span></div>
+                <div><input type="checkbox" class="prof">Телосложение <span id="consave">0</span></div>
+                <div><input type="checkbox" class="prof">Интеллект <span id="intsave">0</span></div>
+                <div><input type="checkbox" class="prof">Мудрость <span id="wissave">0</span></div>
+                <div><input type="checkbox" class="prof">Харизма <span id="chasave">0</span></div>
+            </div>
+            <div id="skills"> <!-- навыки-->
+                <h1 class="title">Навыки</h1>
+                <div><input type="checkbox" class="prof">Атлетика <span>0</span></div>
+                <br>
+                <div><input type="checkbox" class="prof">Акробатика <span>0</span></div>
+                <div><input type="checkbox" class="prof">Ловкость рук <span>0</span></div>
+                <div><input type="checkbox" class="prof">Скрытность <span>0</span></div>
+                <br>
+                <div><input type="checkbox" class="prof">История <span>0</span></div>
+                <div><input type="checkbox" class="prof">Магия <span>0</span></div>
+                <div><input type="checkbox" class="prof">Природа <span>0</span></div>
+                <div><input type="checkbox" class="prof">Расследование <span>0</span></div>
+                <div><input type="checkbox" class="prof">Религия <span>0</span></div>
+                <br>
+                <div><input type="checkbox" class="prof">Внимательность <span>0</span></div>
+                <div><input type="checkbox" class="prof">Выживание <span>0</span></div>
+                <div><input type="checkbox" class="prof">Медицина <span>0</span></div>
+                <div><input type="checkbox" class="prof">Проницательность <span>0</span></div>
+                <div><input type="checkbox" class="prof">Уход за животными <span>0</span></div>
+                <br>
+                <div><input type="checkbox" class="prof">Выступление <span>0</span></div>
+                <div><input type="checkbox" class="prof">Запугивание <span>0</span></div>
+                <div><input type="checkbox" class="prof">Обман <span>0</span></div>
+                <div><input type="checkbox" class="prof">Убеждение <span>0</span></div>
+            </div>
+            <div id="pasper"> <!-- пассивная вним-->
+                <h1 class="title"><span>10</span> Пассивная внимательность</h1>
+            </div>
+            <div id="otherprof"> <!-- другие владения-->
+                <h1 class="title">Прочие владения и языки</h1>
+                <textarea name="otherprof" cols="28" rows="10"></textarea>
+            </div>
+        </div>
+        <div> <!-- инвентари-->
+            <div id="inventory" align="right"> 
+                <h1 class="title">Экипировка</h1>
+                <textarea name="inventory" cols="80" rows="20"></textarea>
+            </div>
+            <div id="inventory" align="right">
+                <h1 class="title">Инвентарь</h1>
+                <textarea name="inventory" cols="80" rows="30"></textarea>
+            </div>
+        </div>
+        <div> <!-- черты и пассивки-->
+            <div id="perstrait">
+                <div class="perstrait"><h1 class="title">Черты характера</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
+                <div class="perstrait"><h1 class="title">Идеалы</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
+            </div>
+            <div id="perstrait">
+                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
+                <div class="perstrait"><h1 class="title">Слабости</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
+            </div>
+            <div id="otherab">
+                <h1 class="title">Умения и способности</h1>
+                <textarea name="otherab"  cols="60" rows="10"></textarea>
+            </div>
+        </div>
+    </div>
+    <div id="spelllist" class="container hidden"> <!-- лист заклинаний-->
+        <div>
+            <div id="cantrip">
+                <h1 class="title">Заговоры</h1>
+                <textarea name="cantrip" cols="40" rows="10"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">1 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="18"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">2 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="18"></textarea>
+            </div>
+        </div>
+        <div>
+            <div class="spells">
+                <h1 class="title">3 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="16"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">4 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="16"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">5 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="12"></textarea>
+            </div>
+        </div>
+        <div>
+            <div class="spells">
+                <h1 class="title">6 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="10"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">7 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="8"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">8 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="8"></textarea>
+            </div>
+            <div class="spells">
+                <h1 class="title">9 Уровень</h1>
+                <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
+                <textarea name="spells" cols="40" rows="6"></textarea>
+            </div>
+        </div>
+    </div>
+    <script src="char.js"></script>
+</body>
+</html>

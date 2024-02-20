@@ -1,0 +1,98 @@
+body {
+    background-color: #263246;
+}
+form {
+    border: 2px solid #72488b;
+    padding: 8px;
+    margin: auto;
+    width: fit-content;
+    margin-top: 20px;
+    border-radius: 5%;
+    background-color: #283954;
+    color: #FFC300; 
+    box-shadow: 0px 0px 5px #72488b;
+}
+.main-text {
+    color:#fff12e;
+    font-family: impact;
+    font-size: 38px;
+}
+#logout {
+    float: right;
+    margin-top: 3px ;
+    margin-right: 16px;
+    background-color: #af574c; /* Зеленый цвет фона */
+    border: none;
+    color: white;
+    padding: 10px 20px; /* Поля вокруг текста кнопки */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer; /* Курсор при наведении на кнопку */
+    border-radius: 5px; /* Закругленные углы */
+}
+#logout:hover {
+    background-color: #8b3633;
+}
+header {
+    border: 2px solid #72488b;
+    background-color:  #283954;
+    box-shadow: 0px 0px 5px #72488b;
+    padding: 8px;
+    margin: 0 auto;
+    text-align: center;
+}
+.card {
+    width: 280px;
+    height: 80px;
+    border: 2px solid #72488b;
+    box-shadow: 0px 0px 5px #72488b;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    flex-direction: column; /* Устанавливаем направление столбца для элементов внутри карточки */
+    justify-content: space-between;
+    position: relative;
+    background-color:  #283954;
+}
+#cardContainer {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Определяем ширину колонок, которая должна быть минимум 200px, но не более чем заполнять доступное пространство */
+    grid-gap: 10px; /* Пространство между карточками */
+}
+.delete-button {
+    position: absolute; /* Позиционируем абсолютно относительно родительского элемента */
+    top: 5px; /* Отступ от верхнего края карточки */
+    right: 8px; /* Отступ от правого края карточки */
+    margin: auto;
+    font-weight: bold;
+    font-size: 20px;
+    color: rgb(197, 39, 39);
+    cursor: pointer;
+}
+.card-header {
+    font-weight: bold;
+    font-size: 24px;
+}
+.card-content {
+    font-weight: lighter;
+    color: red;
+    margin-top: 30px;
+}
+.add-button {
+    background-color: #4CAF50; /* Зеленый цвет фона */
+    border: none;
+    color: white;
+    padding: 10px 20px; /* Поля вокруг текста кнопки */
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 10px; /* Внешние отступы кнопки */
+    cursor: pointer; /* Курсор при наведении на кнопку */
+    border-radius: 5px; /* Закругленные углы */
+}
+.add-button:hover {
+    background-color: #3a943d;
+}
