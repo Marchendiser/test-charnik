@@ -1,3 +1,46 @@
+// Some constant values, ids, etc
+const ABILITIES = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
+
+// Page data. To be synced with local storage, to be loaded from local storage
+let CHAR_DATA;
+let dataUpdateInterval;
+
+window.addEventListener("load", ev => {
+    loadCharacterListData();
+
+    // apply CHAR_DATA to html, set correct values.
+
+    dataUpdateInterval = setInterval(() => {
+        saveCharDataToLocalStorage(CHAR_DATA);
+    }, 30000);
+})
+
+function loadCharacterListData() {
+    var data = localStorage.getItem("charData");
+    console.log("Loaded data", data);
+    if (data != null && data.length > 0) {
+        CHAR_DATA = JSON.parse(data);
+    } else {
+        let initCharData = {
+            profBonus: 2,
+            abilities: ABILITIES.reduce((abils, abilityName, index) => {
+                if (abils[abilityName]) {
+                  console.error("Хуйня, хули она два раза у тебя", abilityName)
+                } else {
+                    abils[abilityName] = ability(abilityName);
+                }
+                return abils;
+              }, {})
+        };
+        saveCharDataToLocalStorage(initCharData);
+        CHAR_DATA = initCharData;
+    }
+}
+
+function saveCharDataToLocalStorage(charData) {
+    localStorage.setItem("charData", JSON.stringify(charData));
+}
+
 //кнопка переключения "страниц"
 var stats = document.getElementById("statwrap");
 var caststats = document.getElementById("caststat");
@@ -17,157 +60,110 @@ function showlist() {
     info.classList.remove("hidden");
     spellist.classList.add("hidden")
 }
-
-//изменение бонуса мастерства по нажатию
-var bonusnumber = document.getElementById("bonusnumber");
-function bonusup() {
-    bonusnumber.innerHTML ++;
-    if (bonusnumber.innerHTML > 6) {
-        bonusnumber.innerHTML = 2
-    }
-}
 /*подчсёт модификаторов (100% можно упростить?)
 и добваление к спасброскам и инициативе
 (навыки пока не сделал ибо тильтанул на грязный код)*/
-var strscore = document.getElementById("strscore");
-var strmod = document.getElementById("strmod");
-var strsave = document.getElementById("strsave");
-function updateStrMod() {
-    var value = parseInt(strscore.value);
-    let newValue = 0;
 
-    if (value >= 0 && value <= 30) {
-        if (value % 2 === 0) {
-            newValue = (value / 2) - 5;
-        } else {
-            newValue = Math.floor(value / 2) - 5;
+
+ABILITIES.forEach(abilityName => {
+    console.log("creating listener for ", abilityName)
+    const abilityElementIds = getAbilityRelatedElementIds(abilityName);
+    const abilityScoreElem = document.getElementById(abilityElementIds.scoreElemId);
+    const updateAbility = () => {
+        const ability = CHAR_DATA.abilities[abilityName];
+
+        ability.value = parseInt(abilityScoreElem.value);
+
+        let modificatorValue = getAbilityModificatorValue(ability);
+        console.log(`ability ${ability.id} new value`, modificatorValue);
+
+        const abilityModEl = document.getElementById(abilityElementIds.modElemId);
+        abilityModEl.textContent = intValueToString(modificatorValue);
+
+        recalcSaveThrow(ability, CHAR_DATA.profBonus);
+
+        if (ability.id === "DEX") {
+            let initiative = document.getElementById("initiative");
+            initiative.textContent = intValueToString(modificatorValue);
         }
-        if (newValue > 0) {
-            newValue = "+" + newValue;
-        }
+    };
+    abilityScoreElem.addEventListener("input", updateAbility);
+
+    const abilityProficiencyElem = document.getElementById(abilityElementIds.proficiencyElemId);
+
+    const updateAbilityProficiency = (event) => {
+        const ability = CHAR_DATA.abilities[abilityName];
+        ability.proficiency = event.target.checked;
+        recalcSaveThrow(ability, CHAR_DATA.profBonus);
     }
-    strmod.textContent = newValue;
-    strsave.textContent = newValue;
-}
-strscore.addEventListener("input", function() {
-    updateStrMod(strscore, strmod, strsave);
+
+    abilityProficiencyElem.addEventListener("change", updateAbilityProficiency);
 });
 
-var dexscore = document.getElementById("dexscore");
-var dexmod = document.getElementById("dexmod");
-var dexsave = document.getElementById("dexsave")
-var initiative = document.getElementById("initiative");
-function updateDexMod() {
-    var value = parseInt(dexscore.value);
-    let newValue = 0;
+const ability = (id) => {
+    console.log(`create ability ${id}`)
+    return {
+        id: id,
+        value: 0,
+        proficiency: false
+    };
+};
 
+function getAbilityModificatorValue(ability) {
+    var value = ability.value;
+    let newValue = 0;
     if (value >= 0 && value <= 30) {
         if (value % 2 === 0) {
             newValue = (value / 2) - 5;
         } else {
             newValue = Math.floor(value / 2) - 5;
         }
-        if (newValue > 0) {
-            newValue = "+" + newValue;
-        }
     }
-    dexmod.textContent = newValue;
-    dexsave.textContent = newValue;
-    initiative.textContent = newValue;
+    return newValue;
 }
-dexscore.addEventListener("input", function() {
-    updateDexMod(dexscore, dexmod, dexsave, initiative);
-})
-var conscore = document.getElementById("conscore");
-var conmod = document.getElementById("conmod");
-var consave = document.getElementById("consave");
-function updateConMod() {
-    var value = parseInt(conscore.value);
-    let newValue = 0;
 
-    if (value >= 0 && value <= 30) {
-        if (value % 2 === 0) {
-            newValue = (value / 2) - 5;
-        } else {
-            newValue = Math.floor(value / 2) - 5;
-        }
-        if (newValue > 0) {
-            newValue = "+" + newValue;
-        }
+//изменение бонуса мастерства по нажатию
+function bonusup() {
+    console.log("bonusup", CHAR_DATA);
+    let profBonus = CHAR_DATA.profBonus + 1;
+    if (profBonus > 6) {
+        profBonus = 2
     }
-    conmod.textContent = newValue;
-    consave.textContent = newValue;
-}
-conscore.addEventListener("input", function() {
-    updateConMod(conscore, conmod, consave);
-})
-var intscore = document.getElementById("intscore");
-var intmod = document.getElementById("intmod");
-var intsave = document.getElementById("intsave")
-function updateIntMod() {
-    var value = parseInt(intscore.value);
-    let newValue = 0;
+    CHAR_DATA.profBonus = profBonus;
+    recalcSaveThrowsOnProfBonusChange(profBonus);
+    document.getElementById("bonusnumber").innerHTML = profBonus;
 
-    if (value >= 0 && value <= 30) {
-        if (value % 2 === 0) {
-            newValue = (value / 2) - 5;
-        } else {
-            newValue = Math.floor(value / 2) - 5;
-        }
-        if (newValue > 0) {
-            newValue = "+" + newValue;
-        }
-    }
-    intmod.textContent = newValue;
-    intsave.textContent = newValue;
-}
-intscore.addEventListener("input", function() {
-    updateIntMod(intscore, intmod, intsave);
-})
-var wisscore = document.getElementById("wisscore");
-var wismod = document.getElementById("wismod");
-var wissave = document.getElementById("wissave");
-function updateWisMod() {
-    var value = parseInt(wisscore.value);
-    let newValue = 0;
 
-    if (value >= 0 && value <= 30) {
-        if (value % 2 === 0) {
-            newValue = (value / 2) - 5;
-        } else {
-            newValue = Math.floor(value / 2) - 5;
-        }
-        if (newValue > 0) {
-            newValue = "+" + newValue;
-        }
-    }
-    wismod.textContent = newValue;
-    wissave.textContent = newValue;
 }
-wisscore.addEventListener("input", function() {
-    updateWisMod(wisscore, wismod, wissave);
-})
-var chascore = document.getElementById("chascore");
-var chamod = document.getElementById("chamod");
-var chasave = document.getElementById("chasave")
-function updateChaMod() {
-    var value = parseInt(chascore.value);
-    let newValue = 0;
 
-    if (value >= 0 && value <= 30) {
-        if (value % 2 === 0) {
-            newValue = (value / 2) - 5;
-        } else {
-            newValue = Math.floor(value / 2) - 5;
-        }
-        if (newValue > 0) {
-            newValue = "+" + newValue;
-        }
-    }
-    chamod.textContent = newValue;
-    chasave.textContent = newValue;
+function recalcSaveThrowsOnProfBonusChange(profBonusNewValue) {
+    ABILITIES.forEach(ability => recalcSaveThrow(CHAR_DATA.abilities[ability], profBonusNewValue));
 }
-chascore.addEventListener("input", function() {
-    updateChaMod(chascore, chamod, chasave);
-})
+
+function recalcSaveThrow(ability, profBonus) {
+    const saveThrowElemId = getAbilityRelatedElementIds(ability.id).saveThrowElemId;
+    const abilitySaveThrowEl = document.getElementById(saveThrowElemId);
+    let saveThrow = getAbilityModificatorValue(ability);
+    if (ability.proficiency) {
+        saveThrow = saveThrow + profBonus;
+    }
+    abilitySaveThrowEl.textContent = intValueToString(saveThrow);
+}
+
+function intValueToString(intVal) {
+    if (intVal > 0) {
+        return "+" + intVal;
+    }
+    return intVal;
+}
+
+function getAbilityRelatedElementIds(abilityName) {
+    return {
+        scoreElemId: abilityName.toLowerCase() + 'score',
+        modElemId: abilityName.toLowerCase() + 'mod',
+        saveThrowElemId: abilityName.toLowerCase() + 'save',
+        proficiencyElemId: abilityName.toLowerCase() + '-save-prof'
+    };
+}
+
 // добавление Бонуса Мастерства при владении (ебучие чекбоксы)
