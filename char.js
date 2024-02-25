@@ -5,14 +5,54 @@ const ABILITIES = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 let CHAR_DATA;
 let dataUpdateInterval;
 
+//сейв и загрузка инпутов с основной инфой
+let CharListData = {};
+const info = document.getElementById("info");
+const ListData = localStorage
+
+info.addEventListener("input", function(event){
+    CharListData[event.target.name] = event.target.value;
+    ListData.setItem("CharListData", JSON.stringify(CharListData));
+})
+if (ListData.getItem("CharListData")) {
+    CharListData = JSON.parse(ListData.getItem("CharListData"));
+    document.getElementById("name").value = CharListData.name;
+    document.getElementById("race").value = CharListData.race;
+    document.getElementById("claslvl").value = CharListData.claslvl;
+    document.getElementById("age").value = CharListData.age;
+    document.getElementById("alignment").value = CharListData.alignment;
+    document.getElementById("exp").value = CharListData.exp;
+}
+
+//сейв и загрузка боевых-статов инпутов
+let CharStatusData = {};
+const charStatus = document.getElementById("status");
+const StatusData = localStorage;
+
+charStatus.addEventListener("input", function(event){
+    CharStatusData[event.target.name] = event.target.value;
+    StatusData.setItem("CharStatusData", JSON.stringify(CharStatusData));
+})
+if (StatusData.getItem("CharStatusData")) {
+    CharStatusData = JSON.parse(StatusData.getItem("CharStatusData"));
+    document.getElementById("armclass").value = CharStatusData.armclass;
+    document.getElementById("speed").value = CharStatusData.speed;
+    document.getElementById("curhits").value = CharStatusData.curhits;
+    document.getElementById("maxhits").value = CharStatusData.maxhits;
+    document.getElementById("temphits").value = CharStatusData.temphits;
+    document.getElementById("hitdie").value = CharStatusData.hitdie;
+}
+
+
 window.addEventListener("load", ev => {
-    loadCharacterListData();
+    loadCharacterListData(); //ЭТА ХУЙНЯ НЕ ЗАГРУЖАЕТ СТАТЫ ИЗ СТОРИДЖА ДАЖЕ В ИНПУТЫ
 
     // apply CHAR_DATA to html, set correct values.
 
-    dataUpdateInterval = setInterval(() => {
+    /*dataUpdateInterval = setInterval(() => {
         saveCharDataToLocalStorage(CHAR_DATA);
-    }, 30000);
+    }, 10000);*/
+
 })
 
 function loadCharacterListData() {
@@ -45,24 +85,22 @@ function saveCharDataToLocalStorage(charData) {
 var stats = document.getElementById("statwrap");
 var caststats = document.getElementById("caststat");
 var spellist = document.getElementById("spelllist");
-var info = document.getElementById("content");
+var infomain = document.getElementById("content");
 
 function showspell() {
     stats.classList.add("hidden");
     caststats.classList.remove("hidden");
-    info.classList.add("hidden");
+    infomain.classList.add("hidden");
     spellist.classList.remove("hidden")
 }
 
 function showlist() {
     stats.classList.remove("hidden");
     caststats.classList.add("hidden");
-    info.classList.remove("hidden");
+    infomain.classList.remove("hidden");
     spellist.classList.add("hidden")
 }
-/*подчсёт модификаторов (100% можно упростить?)
-и добваление к спасброскам и инициативе
-(навыки пока не сделал ибо тильтанул на грязный код)*/
+
 
 
 ABILITIES.forEach(abilityName => {
@@ -75,12 +113,13 @@ ABILITIES.forEach(abilityName => {
         ability.value = parseInt(abilityScoreElem.value);
 
         let modificatorValue = getAbilityModificatorValue(ability);
-        console.log(`ability ${ability.id} new value`, modificatorValue);
+        console.log(`ability mod for ${ability.id} new value`, modificatorValue);
 
         const abilityModEl = document.getElementById(abilityElementIds.modElemId);
         abilityModEl.textContent = intValueToString(modificatorValue);
 
         recalcSaveThrow(ability, CHAR_DATA.profBonus);
+        updateSkillCheck();
 
         if (ability.id === "DEX") {
             let initiative = document.getElementById("initiative");
@@ -162,8 +201,20 @@ function getAbilityRelatedElementIds(abilityName) {
         scoreElemId: abilityName.toLowerCase() + 'score',
         modElemId: abilityName.toLowerCase() + 'mod',
         saveThrowElemId: abilityName.toLowerCase() + 'save',
-        proficiencyElemId: abilityName.toLowerCase() + '-save-prof'
+        proficiencyElemId: abilityName.toLowerCase() + '-save-prof',
     };
 }
 
-// добавление Бонуса Мастерства при владении (ебучие чекбоксы)
+//Бля Святой Юрий Владимирович помогите сделать навыки!
+//Бля я чот нихуя не понимаю бля как вытащить нахой?
+const strSkills = document.getElementById("str-skill");
+const dexSkills = document.getElementById("dex-skill");
+const intSkills = document.getElementById("int-skill");
+const wisSkills = document.getElementById("wis-skill");
+const chaSkills = document.getElementById("cha-skill");
+
+function updateSkillCheck() {
+
+    strSkills.textContent = ability("str").abilityModEl;
+
+}

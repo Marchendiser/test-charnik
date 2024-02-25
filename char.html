@@ -28,11 +28,11 @@
     <div id="statwrap" class=""> <!-- статус персонажа-->
         <div id="status">
             <div class="status">
-                <p contenteditable="true">10</p>
+                <p><input type="text" name="armclass" id="armclass" placeholder="10"></p>
                 <h2>КД</h2>
             </div>
             <div class="status">
-                <p contenteditable="true">30</p>
+                <p><input type="text" name="speed" id="speed" placeholder="30"></p>
                 <h2>Скорость</h2>
             </div>
             <div class="status">
@@ -40,15 +40,15 @@
                 <h2>Инициатива</h2>            
             </div>
             <div class="status">
-                <p><span contenteditable="true">0</span><span>/</span><span contenteditable="true">0</span></p>
+                <p><span><input type="text" name="curhits" id="curhits" placeholder="0"> </span><span>/ </span><span><input type="text" name="maxhits" id="maxhits" placeholder="0"></span></p>
                 <h2>Текущие хиты</h2>
             </div>
             <div class="status">
-                <p contenteditable="true">0</p>
+                <p><input type="text" name="temphits" id="temphits" placeholder="0"></p>
                 <h2>Временные хиты</h2>
             </div>
             <div class="status">
-                <p><input type="text" name="hitdie" placeholder="1d8"></p>
+                <p><input type="text" name="hitdie" id="hitdie" placeholder="1d8"></p>
                 <h2>Кости хитов</h2>
             </div>
             <div class="desaves">
@@ -137,28 +137,27 @@
             </div>
             <div id="skills"> <!-- навыки-->
                 <h1 class="title">Навыки</h1>
-                <div><input type="checkbox" class="prof">Атлетика <span>0</span></div>
+                <div><input type="checkbox" id="str-skill-prof" class="prof">Атлетика <span id="str-skill">0</span></div>
                 <br>
-                <div><input type="checkbox" class="prof">Акробатика <span>0</span></div>
-                <div><input type="checkbox" class="prof">Ловкость рук <span>0</span></div>
-                <div><input type="checkbox" class="prof">Скрытность <span>0</span></div>
+                <div><input type="checkbox" id="dex-skill-prof" class="prof">Акробатика <span id="dex-skill">0</span></div>
+                <div><input type="checkbox" id="dex-skill-prof" class="prof">Скрытность <span id="dex-skill">0</span></div>
                 <br>
-                <div><input type="checkbox" class="prof">История <span>0</span></div>
-                <div><input type="checkbox" class="prof">Магия <span>0</span></div>
-                <div><input type="checkbox" class="prof">Природа <span>0</span></div>
-                <div><input type="checkbox" class="prof">Расследование <span>0</span></div>
-                <div><input type="checkbox" class="prof">Религия <span>0</span></div>
+                <div><input type="checkbox" id="int-skill-prof" class="prof">История <span id="int-skill">0</span></div>
+                <div><input type="checkbox" id="int-skill-prof" class="prof">Магия <span id="int-skill">0</span></div>
+                <div><input type="checkbox" id="int-skill-prof" class="prof">Природа <span id="int-skill">0</span></div>
+                <div><input type="checkbox" id="int-skill-prof" class="prof">Расследование <span id="int-skill">0</span></div>
+                <div><input type="checkbox" id="int-skill-prof" class="prof">Религия <span id="int-skill">0</span></div>
                 <br>
-                <div><input type="checkbox" class="prof">Внимательность <span>0</span></div>
-                <div><input type="checkbox" class="prof">Выживание <span>0</span></div>
-                <div><input type="checkbox" class="prof">Медицина <span>0</span></div>
-                <div><input type="checkbox" class="prof">Проницательность <span>0</span></div>
-                <div><input type="checkbox" class="prof">Уход за животными <span>0</span></div>
+                <div><input type="checkbox" id="wis-skill-prof" class="prof">Внимательность <span id="wis-skill">0</span></div>
+                <div><input type="checkbox" id="wis-skill-prof" class="prof">Выживание <span id="wis-skill">0</span></div>
+                <div><input type="checkbox" id="wis-skill-prof" class="prof">Медицина <span id="wis-skill">0</span></div>
+                <div><input type="checkbox" id="wis-skill-prof" class="prof">Проницательность <span id="wis-skill">0</span></div>
+                <div><input type="checkbox" id="wis-skill-prof" class="prof">Уход за животными <span id="wis-skill">0</span></div>
                 <br>
-                <div><input type="checkbox" class="prof">Выступление <span>0</span></div>
-                <div><input type="checkbox" class="prof">Запугивание <span>0</span></div>
-                <div><input type="checkbox" class="prof">Обман <span>0</span></div>
-                <div><input type="checkbox" class="prof">Убеждение <span>0</span></div>
+                <div><input type="checkbox" id="cha-skill-prof" class="prof">Выступление <span id="cha-skill">0</span></div>
+                <div><input type="checkbox" id="cha-skill-prof" class="prof">Запугивание <span id="cha-skill">0</span></div>
+                <div><input type="checkbox" id="cha-skill-prof" class="prof">Обман <span id="cha-skill">0</span></div>
+                <div><input type="checkbox" id="cha-skill-prof" class="prof">Убеждение <span id="cha-skill">0</span></div>
             </div>
             <div id="pasper"> <!-- пассивная вним-->
                 <h1 class="title"><span>10</span> Пассивная внимательность</h1>
