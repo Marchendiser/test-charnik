@@ -80,6 +80,7 @@ function appyCharacterDataToPage() {
     ABILITIES.forEach(abilityName => {
         const abilityElementIds = getAbilityRelatedElementIds(abilityName);
         applyAbilityValueFromCharData(document.getElementById(abilityElementIds.scoreElemId), abilityName);
+        
     });
     SKILLS.forEach(skill => {
         updateSkillValue(skill);
@@ -297,6 +298,10 @@ function applyAbilityValueFromCharData(abilityScoreElem, abilityName) {
     const ability = CHAR_DATA.abilities[abilityName];
 
     abilityScoreElem.value = ability.value;
+
+    if (ability.proficiency) {
+        // set CB value
+    }
 
     recalculateFieldsAfterAbilityUpdated(abilityName, ability)
 }
