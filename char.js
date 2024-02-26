@@ -1,9 +1,93 @@
 // Some constant values, ids, etc
 const ABILITIES = ["STR", "DEX", "CON", "INT", "WIS", "CHA"];
 
+const SKILLS = [
+    'athletics',
+    'acrobatics',
+    'stealth',
+    'history',
+    'magika',
+    'nature',
+    'ivestigation',
+    'religion',
+    'perception',
+    'survival',
+    'medicine',
+    'insight',
+    'animals',
+    'performance',
+    'intimidation',
+    'deception',
+    'persuation'
+]
+
+
+const SKILL_TO_ABILITY = {
+    'athletics': "STR",
+    'acrobatics': "DEX",
+    'stealth': "DEX",
+    'history': "INT",
+    'magika': "INT",
+    'nature': "INT",
+    'ivestigation': "INT",
+    'religion': "INT",
+    'perception': "WIS",
+    'survival': "WIS",
+    'medicine': "WIS",
+    'insight': "WIS",
+    'animals': "WIS",
+    'performance': "CHA",
+    'intimidation': "CHA",
+    'deception': "CHA",
+    'persuation': "CHA"
+}
+
 // Page data. To be synced with local storage, to be loaded from local storage
 let CHAR_DATA;
 let dataUpdateInterval;
+
+function loadCharacterListDataFromLocalStorage() {
+    var data = localStorage.getItem("charData");
+    console.log("Loaded data", data);
+    if (data != null && data.length > 0) {
+        CHAR_DATA = JSON.parse(data);
+    } else {
+        let initCharData = {
+            profBonus: 2,
+            abilities: ABILITIES.reduce((abils, abilityName, index) => {
+                if (abils[abilityName]) {
+                  console.error("Хуйня, хули она два раза у тебя", abilityName)
+                } else {
+                    abils[abilityName] = ability(abilityName);
+                }
+                return abils;
+              }, {}),
+            skills: []
+        };
+        saveCharDataToLocalStorage(initCharData);
+        CHAR_DATA = initCharData;
+    }
+}
+
+function saveCharDataToLocalStorage(charData) {
+    localStorage.setItem("charData", JSON.stringify(charData));
+}
+
+
+// Function should take the CHAR_DATA contnets (which was previously loaded from localStorage using loadCharacterListDataFromLocalStorage),
+// and update the page contents to match 
+function appyCharacterDataToPage() {
+    ABILITIES.forEach(abilityName => {
+        const abilityElementIds = getAbilityRelatedElementIds(abilityName);
+        applyAbilityValueFromCharData(document.getElementById(abilityElementIds.scoreElemId), abilityName);
+    });
+    SKILLS.forEach(skill => {
+        updateSkillValue(skill);
+        if (CHAR_DATA.skills.includes(skill)) {
+            setSkillInputValue(skill, true);
+        }
+    })
+} 
 
 //сейв и загрузка инпутов с основной инфой
 let CharListData = {};
@@ -166,41 +250,18 @@ if (savedSpells.getItem("spellList")) {
 
 
 window.addEventListener("load", ev => {
-    loadCharacterListData(); //ЭТА ХУЙНЯ НЕ ЗАГРУЖАЕТ СТАТЫ ИЗ СТОРИДЖА ДАЖЕ В ИНПУТЫ
+    loadCharacterListDataFromLocalStorage(); // ЭТА ХУЙНЯ НЕ ЗАГРУЖАЕТ СТАТЫ ИЗ СТОРИДЖА ДАЖЕ В ИНПУТЫ
 
     // apply CHAR_DATA to html, set correct values.
+    appyCharacterDataToPage();
 
-    /*dataUpdateInterval = setInterval(() => {
+    dataUpdateInterval = setInterval(() => {
         saveCharDataToLocalStorage(CHAR_DATA);
-    }, 10000);*/
+    }, 10000);
 
 })
 
-function loadCharacterListData() {
-    var data = localStorage.getItem("charData");
-    console.log("Loaded data", data);
-    if (data != null && data.length > 0) {
-        CHAR_DATA = JSON.parse(data);
-    } else {
-        let initCharData = {
-            profBonus: 2,
-            abilities: ABILITIES.reduce((abils, abilityName, index) => {
-                if (abils[abilityName]) {
-                  console.error("Хуйня, хули она два раза у тебя", abilityName)
-                } else {
-                    abils[abilityName] = ability(abilityName);
-                }
-                return abils;
-              }, {})
-        };
-        saveCharDataToLocalStorage(initCharData);
-        CHAR_DATA = initCharData;
-    }
-}
 
-function saveCharDataToLocalStorage(charData) {
-    localStorage.setItem("charData", JSON.stringify(charData));
-}
 
 //кнопка переключения "страниц"
 var stats = document.getElementById("statwrap");
@@ -222,44 +283,7 @@ function showlist() {
     spellist.classList.add("hidden")
 }
 
-
-
-ABILITIES.forEach(abilityName => {
-    console.log("creating listener for ", abilityName)
-    const abilityElementIds = getAbilityRelatedElementIds(abilityName);
-    const abilityScoreElem = document.getElementById(abilityElementIds.scoreElemId);
-    const updateAbility = () => {
-        const ability = CHAR_DATA.abilities[abilityName];
-
-        ability.value = parseInt(abilityScoreElem.value);
-
-        let modificatorValue = getAbilityModificatorValue(ability);
-        console.log(`ability mod for ${ability.id} new value`, modificatorValue);
-
-        const abilityModEl = document.getElementById(abilityElementIds.modElemId);
-        abilityModEl.textContent = intValueToString(modificatorValue);
-
-        recalcSaveThrow(ability, CHAR_DATA.profBonus);
-        updateSkillCheck();
-
-        if (ability.id === "DEX") {
-            let initiative = document.getElementById("initiative");
-            initiative.textContent = intValueToString(modificatorValue);
-        }
-    };
-    abilityScoreElem.addEventListener("input", updateAbility);
-
-    const abilityProficiencyElem = document.getElementById(abilityElementIds.proficiencyElemId);
-
-    const updateAbilityProficiency = (event) => {
-        const ability = CHAR_DATA.abilities[abilityName];
-        ability.proficiency = event.target.checked;
-        recalcSaveThrow(ability, CHAR_DATA.profBonus);
-    }
-
-    abilityProficiencyElem.addEventListener("change", updateAbilityProficiency);
-});
-
+// VALUES UPDATE FUNCTIONS
 const ability = (id) => {
     console.log(`create ability ${id}`)
     return {
@@ -268,6 +292,50 @@ const ability = (id) => {
         proficiency: false
     };
 };
+
+function applyAbilityValueFromCharData(abilityScoreElem, abilityName) {
+    const ability = CHAR_DATA.abilities[abilityName];
+
+    abilityScoreElem.value = ability.value;
+
+    recalculateFieldsAfterAbilityUpdated(abilityName, ability)
+}
+
+function updateAbility(abilityScoreElem, abilityName) {
+
+    const ability = CHAR_DATA.abilities[abilityName];
+
+    ability.value = parseInt(abilityScoreElem.value);
+
+    recalculateFieldsAfterAbilityUpdated(abilityName, ability)
+};
+
+function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
+    const abilityElementIds = getAbilityRelatedElementIds(abilityName);
+
+    let modificatorValue = getAbilityModificatorValue(ability);
+    console.log(`ability mod for ${ability.id} new value`, modificatorValue);
+
+    const abilityModEl = document.getElementById(abilityElementIds.modElemId);
+    abilityModEl.textContent = intValueToString(modificatorValue);
+
+    recalcSaveThrow(ability, CHAR_DATA.profBonus);
+    
+    SKILLS.filter(skill => SKILL_TO_ABILITY[skill] == abilityName)
+        .forEach(skill => updateSkillValue(skill))
+
+
+    if (ability.id === "DEX") {
+        let initiative = document.getElementById("initiative");
+        initiative.textContent = intValueToString(modificatorValue);
+    }
+}
+
+function updateAbilityProficiency (input) {
+    const ability = CHAR_DATA.abilities[abilityName];
+    ability.proficiency = input.checked;
+    recalcSaveThrow(ability, CHAR_DATA.profBonus);
+}
 
 function getAbilityModificatorValue(ability) {
     var value = ability.value;
@@ -282,6 +350,76 @@ function getAbilityModificatorValue(ability) {
     return newValue;
 }
 
+
+// SKILLS FUNCTIONS
+function updateSkillStateAndValue (skillName, input) {
+    const skillChecked = input.checked;
+    if (skillChecked && !CHAR_DATA.skills.includes(skillName)) {
+        CHAR_DATA.skills.push(skillName);
+    } else if (!skillChecked) {
+        CHAR_DATA.skills = CHAR_DATA.skills.filter(charSkill => charSkill != skillName);
+    }
+
+    updateSkillValue(skillName);
+}
+
+function updateSkillValue(skillName) {
+    const relatedAbilityName = SKILL_TO_ABILITY[skillName];
+
+    const skillValueElemId = relatedAbilityName.toLowerCase() + "-skill-" + skillName;
+    const skillValueElem = document.getElementById(skillValueElemId);
+
+    skillValueElem.innerText = intValueToString(getSkillValue(skillName));
+}
+
+function setSkillInputValue(skillName, isChecked) {
+    console.log("seting skill input initial", skillName, isChecked);
+    const relatedAbility = SKILL_TO_ABILITY[skillName];
+
+    const skillCheckboxId = relatedAbility.toLowerCase() + "-skill-input-" + skillName;
+    const skillCheckbox = document.getElementById(skillCheckboxId);
+
+    skillCheckbox.checked = isChecked;
+}
+
+function getSkillValue(skillName) {
+    const charSkills = CHAR_DATA.skills;
+    const charAbilities = CHAR_DATA.abilities;
+    const profBonus = CHAR_DATA.profBonus;
+
+    const skillAbility = SKILL_TO_ABILITY[skillName];
+    const ability = charAbilities[skillAbility];
+    const abilityValue = getAbilityModificatorValue(ability);
+
+    const charHasSkill = charSkills.includes(skillName);
+
+    return abilityValue + (charHasSkill ? profBonus : 0);
+}
+
+
+// SET UP PAGE LISTENERS
+ABILITIES.forEach(abilityName => {
+    console.log("creating listener for ", abilityName)
+    const abilityElementIds = getAbilityRelatedElementIds(abilityName);
+
+    const abilityScoreElem = document.getElementById(abilityElementIds.scoreElemId);
+    abilityScoreElem.addEventListener("input", event => updateAbility(event.target, abilityName));
+
+    const abilityProficiencyElem = document.getElementById(abilityElementIds.proficiencyElemId);
+    abilityProficiencyElem.addEventListener("change", event => updateAbilityProficiency(event.target) );
+});
+
+SKILLS.forEach(skillName => {
+    console.log("creating listener for ", skillName)
+    const relatedAbility = SKILL_TO_ABILITY[skillName];
+
+    const skillCheckboxId = relatedAbility.toLowerCase() + "-skill-input-" + skillName;
+    const skillCheckbox = document.getElementById(skillCheckboxId);
+
+    skillCheckbox.addEventListener("change", event => updateSkillStateAndValue(skillName, event.target));
+})
+
+
 //изменение бонуса мастерства по нажатию
 function bonusup() {
     console.log("bonusup", CHAR_DATA);
@@ -291,9 +429,8 @@ function bonusup() {
     }
     CHAR_DATA.profBonus = profBonus;
     recalcSaveThrowsOnProfBonusChange(profBonus);
+    SKILLS.forEach(skill => updateSkillValue(skill) );
     document.getElementById("bonusnumber").innerHTML = profBonus;
-
-
 }
 
 function recalcSaveThrowsOnProfBonusChange(profBonusNewValue) {
@@ -326,6 +463,14 @@ function getAbilityRelatedElementIds(abilityName) {
     };
 }
 
+
+/*
+function updateSkillCheck() {
+
+    strSkills.textContent = ability("str").abilityModEl;
+
+}
+*/
 //Бля Святой Юрий Владимирович помогите сделать навыки!
 //Бля я чот нихуя не понимаю бля как вытащить нахой?
 /*const strSkills = document.getElementById("str-skill");
@@ -334,8 +479,4 @@ const intSkills = document.getElementById("int-skill");
 const wisSkills = document.getElementById("wis-skill");
 const chaSkills = document.getElementById("cha-skill");
 
-function updateSkillCheck() {
-
-    strSkills.textContent = ability("str").abilityModEl;
-
-}*/
+*/
