@@ -43,6 +43,127 @@ if (StatusData.getItem("CharStatusData")) {
     document.getElementById("hitdie").value = CharStatusData.hitdie;
 }
 
+//сейв текстового окна прочих владений
+let otherProfData = {};
+const otherProfContent = document.getElementById("otherprofcontent");
+const otherData = localStorage;
+
+otherProfContent.addEventListener("input", function(event){
+    otherProfData[event.target.name] = event.target.value;
+    otherData.setItem("otherProfData", JSON.stringify(otherProfData));
+})
+if (otherData.getItem("otherProfData")) {
+    otherProfData = JSON.parse(otherData.getItem("otherProfData"));
+    document.getElementById("otherprofcontent").value = otherProfData.otherprof;
+}
+
+//сейв экипировки и инвенатаря
+let equipData = {};
+const equipContent = document.getElementById("equipment");
+const savedEquip = localStorage;
+
+equipContent.addEventListener("input", function(event){
+    equipData[event.target.name] = event.target.value;
+    savedEquip.setItem("equipData", JSON.stringify(equipData));
+})
+if (savedEquip.getItem("equipData")) {
+    equipData = JSON.parse(savedEquip.getItem("equipData"));
+    document.getElementById("equipment").value = equipData.inventory;
+}
+
+let invData = {};
+const invContent = document.getElementById("inventorycontent");
+const savedInv = localStorage;
+
+invContent.addEventListener("input", function(event){
+    invData[event.target.name] = event.target.value;
+    savedInv.setItem("invData", JSON.stringify(invData));
+})
+if (savedInv.getItem("invData")) {
+    invData = JSON.parse(savedInv.getItem("invData"));
+    document.getElementById("inventorycontent").value = invData.inventory;
+}
+
+// сейв персональных черт и пассивных абилок
+let traitData1 = {}
+const traitContent1 = document.getElementById("perstrait1");
+const savedTrait1 = localStorage;
+
+traitContent1.addEventListener("input", function(event){
+    traitData1[event.target.name] = event.target.value;
+    savedTrait1.setItem("traitData1", JSON.stringify(traitData1));
+})
+if (savedTrait1.getItem("traitData1")) {
+    traitData1 = JSON.parse(savedTrait1.getItem("traitData1"));
+    document.getElementById("perstrait").value = traitData1.perstrait;
+    document.getElementById("ideal").value = traitData1.ideal;
+}
+
+let traitData2 = {}
+const traitContent2 = document.getElementById("perstrait2");
+const savedTrait2 = localStorage;
+
+traitContent2.addEventListener("input", function(event){
+    traitData2[event.target.name] = event.target.value;
+    savedTrait2.setItem("traitData2", JSON.stringify(traitData2));
+})
+if (savedTrait2.getItem("traitData2")) {
+    traitData2 = JSON.parse(savedTrait2.getItem("traitData2"));
+    document.getElementById("affect").value = traitData2.affect;
+    document.getElementById("weakness").value = traitData2.weakness;
+}
+
+let otherAbData = {}
+const otherAbContent = document.getElementById("otherabcontent");
+const savedOtherAb = localStorage;
+
+otherAbContent.addEventListener("input", function(event){
+    otherAbData[event.target.name] = event.target.value;
+    savedOtherAb.setItem("otherAbData", JSON.stringify(otherAbData));
+})
+if (savedOtherAb.getItem("otherAbData")) {
+    otherAbData = JSON.parse(savedOtherAb.getItem("otherAbData"));
+    document.getElementById("otherabcontent").value = otherAbData.otherab;
+}
+
+//сейв заклинательных абилок
+let castData = {};
+const castContent = document.getElementById("caststat");
+const savedCast = localStorage;
+
+castContent.addEventListener("input", function(event){
+    castData[event.target.name] = event.target.value;
+    savedCast.setItem("castData", JSON.stringify(castData));
+})
+if (savedCast.getItem("castData")) {
+    castData = JSON.parse(savedCast.getItem("castData"));
+    document.getElementById("castclass").value = castData.castclass;
+    document.getElementById("castab").value = castData.castab;
+}
+
+//сейв списка заклинаний
+let spellList = {};
+const spellContent = document.getElementById("spelllist");
+const savedSpells = localStorage;
+
+spellContent.addEventListener("input", function(event){
+    spellList[event.target.name] = event.target.value;
+    savedSpells.setItem("spellList", JSON.stringify(spellList));
+})
+if (savedSpells.getItem("spellList")) {
+    spellList = JSON.parse(savedSpells.getItem("spellList"));
+    document.getElementById("cantripcontent").value = spellList.cantrip;
+    document.getElementById("spells1").value = spellList.spells1;
+    document.getElementById("spells2").value = spellList.spells2;
+    document.getElementById("spells3").value = spellList.spells3;
+    document.getElementById("spells4").value = spellList.spells4;
+    document.getElementById("spells5").value = spellList.spells5;
+    document.getElementById("spells6").value = spellList.spells6;
+    document.getElementById("spells7").value = spellList.spells7;
+    document.getElementById("spells8").value = spellList.spells8;
+    document.getElementById("spells9").value = spellList.spells9;
+}
+
 
 window.addEventListener("load", ev => {
     loadCharacterListData(); //ЭТА ХУЙНЯ НЕ ЗАГРУЖАЕТ СТАТЫ ИЗ СТОРИДЖА ДАЖЕ В ИНПУТЫ
@@ -207,7 +328,7 @@ function getAbilityRelatedElementIds(abilityName) {
 
 //Бля Святой Юрий Владимирович помогите сделать навыки!
 //Бля я чот нихуя не понимаю бля как вытащить нахой?
-const strSkills = document.getElementById("str-skill");
+/*const strSkills = document.getElementById("str-skill");
 const dexSkills = document.getElementById("dex-skill");
 const intSkills = document.getElementById("int-skill");
 const wisSkills = document.getElementById("wis-skill");
@@ -217,4 +338,4 @@ function updateSkillCheck() {
 
     strSkills.textContent = ability("str").abilityModEl;
 
-}
+}*/

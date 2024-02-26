@@ -64,14 +64,14 @@
     <div id="caststat" class="hidden"> <!-- заклинательные бонусы-->
         <div id="status">
             <div class="status">
-                <p><input type="text" class="castclass"></p>
+                <p><input type="text" name="castclass" id="castclass" class="castclass"></p>
                 <h2>Класс заклинателя</h2>
             </div>
             <div class="status">
                 <p><select name="castab" id="castab">
                     <option value="Интеллект">Интеллект</option>
-                    <option value="Интеллект">Мудрость</option>
-                    <option value="Интеллект">Харизма</option>
+                    <option value="Мудрость">Мудрость</option>
+                    <option value="Харизма">Харизма</option>
                 </select></p>
                 <h2>Базовая характеристика</h2>
             </div>
@@ -164,31 +164,31 @@
             </div>
             <div id="otherprof"> <!-- другие владения-->
                 <h1 class="title">Прочие владения и языки</h1>
-                <textarea name="otherprof" cols="28" rows="10"></textarea>
+                <textarea name="otherprof" id="otherprofcontent" cols="28" rows="10"></textarea>
             </div>
         </div>
         <div> <!-- инвентари-->
             <div id="inventory" align="right"> 
                 <h1 class="title">Экипировка</h1>
-                <textarea name="inventory" cols="80" rows="20"></textarea>
+                <textarea name="inventory" id="equipment" cols="80" rows="20"></textarea>
             </div>
             <div id="inventory" align="right">
                 <h1 class="title">Инвентарь</h1>
-                <textarea name="inventory" cols="80" rows="30"></textarea>
+                <textarea name="inventory" id="inventorycontent" cols="80" rows="30"></textarea>
             </div>
         </div>
         <div> <!-- черты и пассивки-->
-            <div id="perstrait">
-                <div class="perstrait"><h1 class="title">Черты характера</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
-                <div class="perstrait"><h1 class="title">Идеалы</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
+            <div id="perstrait1">
+                <div class="perstrait"><h1 class="title">Черты характера</h1><textarea name="perstrait" id="perstrait" cols="30" rows="10"></textarea></div>
+                <div class="perstrait"><h1 class="title">Идеалы</h1><textarea name="ideal" id="ideal" cols="30" rows="10"></textarea></div>
             </div>
-            <div id="perstrait">
-                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
-                <div class="perstrait"><h1 class="title">Слабости</h1><textarea name="perstrait"  cols="30" rows="10"></textarea></div>
+            <div id="perstrait2">
+                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="affect" id="affect" cols="30" rows="10"></textarea></div>
+                <div class="perstrait"><h1 class="title">Слабости</h1><textarea name="weakness" id="weakness" cols="30" rows="10"></textarea></div>
             </div>
             <div id="otherab">
                 <h1 class="title">Умения и способности</h1>
-                <textarea name="otherab"  cols="60" rows="10"></textarea>
+                <textarea name="otherab" id="otherabcontent" cols="60" rows="10"></textarea>
             </div>
         </div>
     </div>
@@ -196,56 +196,56 @@
         <div>
             <div id="cantrip">
                 <h1 class="title">Заговоры</h1>
-                <textarea name="cantrip" cols="40" rows="10"></textarea>
+                <textarea name="cantrip" id="cantripcontent" cols="40" rows="10"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">1 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="18"></textarea>
+                <textarea name="spells1" id="spells1" cols="40" rows="18"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">2 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="18"></textarea>
+                <textarea name="spells2" id="spells2" cols="40" rows="18"></textarea>
             </div>
         </div>
         <div>
             <div class="spells">
                 <h1 class="title">3 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="16"></textarea>
+                <textarea name="spells3" id="spells3" cols="40" rows="16"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">4 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="16"></textarea>
+                <textarea name="spells4" id="spells4" cols="40" rows="16"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">5 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="12"></textarea>
+                <textarea name="spells5" id="spells5" cols="40" rows="12"></textarea>
             </div>
         </div>
         <div>
             <div class="spells">
                 <h1 class="title">6 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="10"></textarea>
+                <textarea name="spells6" id="spells6" cols="40" rows="10"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">7 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="8"></textarea>
+                <textarea name="spells7" id="spells7" cols="40" rows="8"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">8 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="8"></textarea>
+                <textarea name="spells8" id="spells8" cols="40" rows="8"></textarea>
             </div>
             <div class="spells">
                 <h1 class="title">9 Уровень</h1>
                 <h1 class="title">Ячейки: <span>0</span>/<span>0</span></h1>
-                <textarea name="spells" cols="40" rows="6"></textarea>
+                <textarea name="spells9" id="spells9" cols="40" rows="6"></textarea>
             </div>
         </div>
     </div>
