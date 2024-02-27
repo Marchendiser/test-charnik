@@ -68,7 +68,7 @@
                 <h2>Класс заклинателя</h2>
             </div>
             <div class="status">
-                <p><select name="castab" id="castab">
+                <p><select name="castab" id="castab" onchange="updateCastStats()">
                     <option value="Интеллект">Интеллект</option>
                     <option value="Мудрость">Мудрость</option>
                     <option value="Харизма">Харизма</option>
@@ -76,11 +76,11 @@
                 <h2>Базовая характеристика</h2>
             </div>
             <div class="status">
-                <p>8</p>
+                <p id="spellSave">8</p>
                 <h2>Сложность спасброска</h2>            
             </div>
             <div class="status">
-                <p>0</p>
+                <p id="spellAtk">0</p>
                 <h2>Бонус атаки заклинанием</h2>
             </div>
             <div>
@@ -160,7 +160,7 @@
                 <div><input type="checkbox" id="cha-skill-input-persuation" class="prof">Убеждение <span id="cha-skill-persuation">0</span></div>
             </div>
             <div id="pasper"> <!-- пассивная вним-->
-                <h1 class="title"><span>10</span> Пассивная внимательность</h1>
+                <h1 class="title"><span id="passivePersep">10</span> Пассивная внимательность</h1>
             </div>
             <div id="otherprof"> <!-- другие владения-->
                 <h1 class="title">Прочие владения и языки</h1>

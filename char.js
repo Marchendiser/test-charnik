@@ -255,10 +255,11 @@ window.addEventListener("load", ev => {
 
     // apply CHAR_DATA to html, set correct values.
     appyCharacterDataToPage();
+    updateCastStats();
 
     dataUpdateInterval = setInterval(() => {
         saveCharDataToLocalStorage(CHAR_DATA);
-    }, 10000);
+    }, 2000);
 
 })
 
@@ -294,13 +295,18 @@ const ability = (id) => {
     };
 };
 
+//загрузка значений Характеристик и Чекбоксов Спасбросокв
 function applyAbilityValueFromCharData(abilityScoreElem, abilityName) {
     const ability = CHAR_DATA.abilities[abilityName];
 
     abilityScoreElem.value = ability.value;
 
     if (ability.proficiency) {
-        // set CB value
+        console.log("proficiency in " + abilityName)
+        const abilityCheckboxId = abilityName.toLowerCase() + '-save-prof';
+        const abilityCheckbox = document.getElementById(abilityCheckboxId);
+
+        abilityCheckbox.checked = true;
     }
 
     recalculateFieldsAfterAbilityUpdated(abilityName, ability)
@@ -313,6 +319,8 @@ function updateAbility(abilityScoreElem, abilityName) {
     ability.value = parseInt(abilityScoreElem.value);
 
     recalculateFieldsAfterAbilityUpdated(abilityName, ability)
+
+    updateCastStats()
 };
 
 function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
@@ -329,14 +337,14 @@ function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
     SKILLS.filter(skill => SKILL_TO_ABILITY[skill] == abilityName)
         .forEach(skill => updateSkillValue(skill))
 
-
     if (ability.id === "DEX") {
         let initiative = document.getElementById("initiative");
         initiative.textContent = intValueToString(modificatorValue);
     }
+
 }
 
-function updateAbilityProficiency (input) {
+function updateAbilityProficiency(abilityName, input) {
     const ability = CHAR_DATA.abilities[abilityName];
     ability.proficiency = input.checked;
     recalcSaveThrow(ability, CHAR_DATA.profBonus);
@@ -410,8 +418,9 @@ ABILITIES.forEach(abilityName => {
     const abilityScoreElem = document.getElementById(abilityElementIds.scoreElemId);
     abilityScoreElem.addEventListener("input", event => updateAbility(event.target, abilityName));
 
-    const abilityProficiencyElem = document.getElementById(abilityElementIds.proficiencyElemId);
-    abilityProficiencyElem.addEventListener("change", event => updateAbilityProficiency(event.target) );
+    const abilityCheckboxId = abilityName.toLowerCase() + '-save-prof';
+    const abilityCheckbox = document.getElementById(abilityCheckboxId);
+    abilityCheckbox.addEventListener("change", event => updateAbilityProficiency(abilityName, event.target));
 });
 
 SKILLS.forEach(skillName => {
@@ -436,6 +445,8 @@ function bonusup() {
     recalcSaveThrowsOnProfBonusChange(profBonus);
     SKILLS.forEach(skill => updateSkillValue(skill) );
     document.getElementById("bonusnumber").innerHTML = profBonus;
+    updateCastStats()
+    updateProfBonud()
 }
 
 function recalcSaveThrowsOnProfBonusChange(profBonusNewValue) {
@@ -468,20 +479,32 @@ function getAbilityRelatedElementIds(abilityName) {
     };
 }
 
+function updateCastStats() {
+    let castAbility = document.getElementById("castab");
+    let spellSave = document.getElementById("spellSave");
+    let spellAtk = document.getElementById("spellAtk");
+    let prof = document.getElementById("bonusnumber").textContent;
+    let intmod = document.getElementById("intmod").textContent;
+    let wismod = document.getElementById("wismod").textContent;
+    let chamod = document.getElementById("chamod").textContent;
 
-/*
-function updateSkillCheck() {
-
-    strSkills.textContent = ability("str").abilityModEl;
-
+    if (castAbility.value === "Интеллект"){
+        spellSave.textContent = 8 + parseInt(prof) + parseInt(intmod);
+        spellAtk.textContent = parseInt(prof) + parseInt(intmod);
+    }else if (castAbility.value === "Мудрость"){
+        spellSave.textContent = 8 + parseInt(prof) + parseInt(wismod);
+        spellAtk.textContent = parseInt(prof) + parseInt(wismod);
+    }else if (castAbility.value === "Харизма"){
+        spellSave.textContent = 8 + parseInt(prof) + parseInt(chamod);
+        spellAtk.textContent = parseInt(prof) + parseInt(chamod);
+    }
+    let castSpell = [spellSave.textContent, spellAtk.textContent];
+    localStorage.setItem("castSpell", JSON.stringify(castSpell));
+    if (localStorage.getItem("castSpell")){
+        castSpell = JSON.parse(localStorage.getItem("castSpell"))
+        spellSave.textContent = castSpell[0];
+        spellAtk.textContent = castSpell[1];
+    }
 }
-*/
-//Бля Святой Юрий Владимирович помогите сделать навыки!
-//Бля я чот нихуя не понимаю бля как вытащить нахой?
-/*const strSkills = document.getElementById("str-skill");
-const dexSkills = document.getElementById("dex-skill");
-const intSkills = document.getElementById("int-skill");
-const wisSkills = document.getElementById("wis-skill");
-const chaSkills = document.getElementById("cha-skill");
 
-*/
+
