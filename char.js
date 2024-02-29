@@ -321,6 +321,7 @@ function updateAbility(abilityScoreElem, abilityName) {
     recalculateFieldsAfterAbilityUpdated(abilityName, ability)
 
     updateCastStats()
+    updatePassivePersep()
 };
 
 function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
@@ -383,6 +384,7 @@ function updateSkillValue(skillName) {
     const skillValueElem = document.getElementById(skillValueElemId);
 
     skillValueElem.innerText = intValueToString(getSkillValue(skillName));
+    updatePassivePersep()
 }
 
 function setSkillInputValue(skillName, isChecked) {
@@ -446,7 +448,7 @@ function bonusup() {
     SKILLS.forEach(skill => updateSkillValue(skill) );
     document.getElementById("bonusnumber").innerHTML = profBonus;
     updateCastStats()
-    updateProfBonud()
+    updatePassivePersep()
 }
 
 function recalcSaveThrowsOnProfBonusChange(profBonusNewValue) {
@@ -507,4 +509,17 @@ function updateCastStats() {
     }
 }
 
+function updatePassivePersep(){
+    let passivePersep = document.getElementById("passivePersep");
+    let persepScore = document.getElementById("wis-skill-perception").textContent;
+
+    passivePersep.textContent = 10 + parseInt(persepScore);
+
+    let passivePersepScore = [passivePersep.textContent];
+    localStorage.setItem("passivePersepScore", JSON.stringify(passivePersepScore));
+    if (localStorage.getItem("passivePersepScore")){
+        passivePersepScore = JSON.parse(localStorage.getItem("passivePersepScore"));
+        passivePersep.textContent = passivePersepScore[0];
+    }
+}
 
