@@ -55,6 +55,7 @@ header {
     justify-content: space-between;
     position: relative;
     background-color:  #283954;
+    cursor: pointer;
 }
 #cardContainer {
     display: grid;
