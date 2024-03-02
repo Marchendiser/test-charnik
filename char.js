@@ -60,7 +60,7 @@ window.addEventListener("load", ev => {
     updateCastStats();
 
     dataUpdateInterval = setInterval(() => {
-        saveCharDataToLocalStorage(CHAR_DATA);
+        saveCharDataUpdate();
     }, 2000);
 
 })

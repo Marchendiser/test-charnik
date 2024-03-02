@@ -9,7 +9,14 @@ window.addEventListener('load', ev => {
 
     // get the cards from local storage, and apply this data to the page, to render all the cards. 
     // Also, count the cards  to get the char Id counter in place. (or even read own property for that)
-
+    characters = JSON.parse(localStorage.getItem("characters"));
+    if (characters == null || characters == undefined) {
+        characters = {};
+    }
+    for (const charId in characters) {
+        console.log("WTF", charId);
+       addCard(characters[charId]); 
+    }
 });
 
 
@@ -20,10 +27,15 @@ function logOut(){
 
 //создание ячеек новых персонажей
 
-function addCard() {    
+function addNewCard() {    
+    
     
     var characterData = makeNewCharacterAndSaveToStorage(cardCounter++);
+    addCard(characterData);
+}
 
+function addCard(characterData) {   
+    console.log("add card for character", characterData, characterData.id) 
     var card = document.createElement("div");
     card.className = "card";
     var cardContentWrapper = document.createElement("div")
@@ -62,7 +74,6 @@ function addCard() {
     */
 
     document.getElementById("cardContainer").appendChild(card);
-    saveCardsToLocalStorage();
 }
 //обновлялка порядкового номера карточки
 function updateCardNumbers() {
