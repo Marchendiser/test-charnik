@@ -46,37 +46,49 @@ const SKILL_TO_ABILITY = {
 let CHAR_DATA;
 let dataUpdateInterval;
 
-function loadCharacterListDataFromLocalStorage() {
-    var data = localStorage.getItem("charData");
-    console.log("Loaded data", data);
-    if (data != null && data.length > 0) {
-        CHAR_DATA = JSON.parse(data);
-    } else {
-        let initCharData = {
-            profBonus: 2,
-            abilities: ABILITIES.reduce((abils, abilityName, index) => {
-                if (abils[abilityName]) {
-                  console.error("Хуйня, хули она два раза у тебя", abilityName)
-                } else {
-                    abils[abilityName] = ability(abilityName);
-                }
-                return abils;
-              }, {}),
-            skills: []
-        };
-        saveCharDataToLocalStorage(initCharData);
-        CHAR_DATA = initCharData;
-    }
+// Window On load
+window.addEventListener("load", ev => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const charid = urlParams.get('id');
+
+    console.log("Char id ", charid);
+
+    loadCharacterListDataFromLocalStorage(charid);
+
+    // apply CHAR_DATA to html, set correct values.
+    applyCharacterDataToPage();
+    updateCastStats();
+
+    dataUpdateInterval = setInterval(() => {
+        saveCharDataToLocalStorage(CHAR_DATA);
+    }, 2000);
+
+})
+
+
+function loadCharacterListDataFromLocalStorage(charId) {
+    const allCharacters = JSON.parse(localStorage.getItem("characters"));
+    const data = allCharacters[charId];
+
+    console.log("our charact3er", data)
+
+    if (data ==  null || data == undefined) {
+        window.location = "/main.html"
+    } 
+    CHAR_DATA = data;
+
 }
 
-function saveCharDataToLocalStorage(charData) {
-    localStorage.setItem("charData", JSON.stringify(charData));
+function saveCharDataUpdate() {
+    var characters = JSON.parse(localStorage.getItem("characters"));
+    characters[CHAR_DATA.id] = CHAR_DATA; 
+    localStorage.setItem("characters", JSON.stringify(characters));
 }
 
 
 // Function should take the CHAR_DATA contnets (which was previously loaded from localStorage using loadCharacterListDataFromLocalStorage),
 // and update the page contents to match 
-function appyCharacterDataToPage() {
+function applyCharacterDataToPage() {
     ABILITIES.forEach(abilityName => {
         const abilityElementIds = getAbilityRelatedElementIds(abilityName);
         applyAbilityValueFromCharData(document.getElementById(abilityElementIds.scoreElemId), abilityName);
@@ -88,26 +100,40 @@ function appyCharacterDataToPage() {
             setSkillInputValue(skill, true);
         }
     })
+    document.getElementById('bonusnumber').textContent = CHAR_DATA.profBonus;
+    
+    // Former CharListData
+    document.getElementById("name").value = CHAR_DATA.name;
+    document.getElementById("race").value = CHAR_DATA.race;
+    document.getElementById("class-lvl").value = CHAR_DATA.classAndLevel;
+    document.getElementById("age").value = CHAR_DATA.age;
+    document.getElementById("alignment").value = CHAR_DATA.alignment;
+    document.getElementById("exp").value = CHAR_DATA.exp;
+
+    // Former traitData1/traitData2
+    document.getElementById("perstrait").value = CHAR_DATA.personality.perstrait;
+    document.getElementById("ideal").value = CHAR_DATA.personality.ideal;
+    document.getElementById("affect").value = CHAR_DATA.personality.affect;
+    document.getElementById("weakness").value = CHAR_DATA.personality.weakness;
 } 
 
 //сейв и загрузка инпутов с основной инфой
-let CharListData = {};
 const info = document.getElementById("info");
-const ListData = localStorage
 
 info.addEventListener("input", function(event){
-    CharListData[event.target.name] = event.target.value;
-    ListData.setItem("CharListData", JSON.stringify(CharListData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (ListData.getItem("CharListData")) {
-    CharListData = JSON.parse(ListData.getItem("CharListData"));
-    document.getElementById("name").value = CharListData.name;
-    document.getElementById("race").value = CharListData.race;
-    document.getElementById("claslvl").value = CharListData.claslvl;
-    document.getElementById("age").value = CharListData.age;
-    document.getElementById("alignment").value = CharListData.alignment;
-    document.getElementById("exp").value = CharListData.exp;
-}
+
+// сейв персональных черт и пассивных абилок
+const CHARACTER_PERSONALITY = ["perstrait", "ideal", "affection", "wakness"];
+CHARACTER_PERSONALITY.forEach(value => {
+    const elem = document.getElementById(value);
+    elem.addEventListener("input", function(event) {
+        CHAR_DATA.personality[value] = event.target.value;
+        saveCharDataUpdate();
+    });
+})
 
 //сейв и загрузка боевых-статов инпутов
 let CharStatusData = {};
@@ -169,34 +195,7 @@ if (savedInv.getItem("invData")) {
     document.getElementById("inventorycontent").value = invData.inventory;
 }
 
-// сейв персональных черт и пассивных абилок
-let traitData1 = {}
-const traitContent1 = document.getElementById("perstrait1");
-const savedTrait1 = localStorage;
 
-traitContent1.addEventListener("input", function(event){
-    traitData1[event.target.name] = event.target.value;
-    savedTrait1.setItem("traitData1", JSON.stringify(traitData1));
-})
-if (savedTrait1.getItem("traitData1")) {
-    traitData1 = JSON.parse(savedTrait1.getItem("traitData1"));
-    document.getElementById("perstrait").value = traitData1.perstrait;
-    document.getElementById("ideal").value = traitData1.ideal;
-}
-
-let traitData2 = {}
-const traitContent2 = document.getElementById("perstrait2");
-const savedTrait2 = localStorage;
-
-traitContent2.addEventListener("input", function(event){
-    traitData2[event.target.name] = event.target.value;
-    savedTrait2.setItem("traitData2", JSON.stringify(traitData2));
-})
-if (savedTrait2.getItem("traitData2")) {
-    traitData2 = JSON.parse(savedTrait2.getItem("traitData2"));
-    document.getElementById("affect").value = traitData2.affect;
-    document.getElementById("weakness").value = traitData2.weakness;
-}
 
 let otherAbData = {}
 const otherAbContent = document.getElementById("otherabcontent");
@@ -248,20 +247,6 @@ if (savedSpells.getItem("spellList")) {
     document.getElementById("spells8").value = spellList.spells8;
     document.getElementById("spells9").value = spellList.spells9;
 }
-
-
-window.addEventListener("load", ev => {
-    loadCharacterListDataFromLocalStorage(); // ЭТА ХУЙНЯ НЕ ЗАГРУЖАЕТ СТАТЫ ИЗ СТОРИДЖА ДАЖЕ В ИНПУТЫ
-
-    // apply CHAR_DATA to html, set correct values.
-    appyCharacterDataToPage();
-    updateCastStats();
-
-    dataUpdateInterval = setInterval(() => {
-        saveCharDataToLocalStorage(CHAR_DATA);
-    }, 2000);
-
-})
 
 
 

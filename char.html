@@ -17,7 +17,7 @@
         <label for="name">Раса:
             <input type="text" name="race" placeholder="Раса" id="race"></label>
         <label for="name">Класс и Уровень:
-            <input type="text" name="claslvl" placeholder="Класс и Уровень" id="claslvl"></label>
+            <input type="text" name="classAndLevel" placeholder="Класс и Уровень" id="class-lvl"></label>
         <label for="name">Возраст:
             <input type="text" name="age" placeholder="Возраст" id="age"></label>
         <label for="name">Мировоззрение:
@@ -124,7 +124,7 @@
         <div>
             <div id="profbonus"> <!-- бонус мастерства-->
                 <h1 class="title">Бонус мастерства</h1>
-                <h2 onclick="bonusup()" align="center">+<span id="bonusnumber">2</span></h2>
+                <h2 onclick="bonusup()" align="center">+<span id="bonusnumber">{profBonus}</span></h2>
             </div>
             <div id="saves"> <!-- спасы-->
                 <h1 class="title">Спасброски</h1>
@@ -183,7 +183,7 @@
                 <div class="perstrait"><h1 class="title">Идеалы</h1><textarea name="ideal" id="ideal" cols="30" rows="10"></textarea></div>
             </div>
             <div id="perstrait2">
-                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="affect" id="affect" cols="30" rows="10"></textarea></div>
+                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="affect" id="affection" cols="30" rows="10"></textarea></div>
                 <div class="perstrait"><h1 class="title">Слабости</h1><textarea name="weakness" id="weakness" cols="30" rows="10"></textarea></div>
             </div>
             <div id="otherab">
