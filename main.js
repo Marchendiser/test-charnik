@@ -39,10 +39,10 @@ function addCard(characterData) {
     var card = document.createElement("div");
     card.className = "card";
     var cardContentWrapper = document.createElement("div")
-    var cardHeader = document.createElement("a");
+    var cardHeader = document.createElement("div");
     cardHeader.textContent = "Новый персонаж " + characterData.id;
     cardHeader.className = "card-header";
-    cardHeader.href = `/char.html?id=${characterData.id}`
+    //cardHeader.href = `/test/char.html?id=${characterData.id}`;
     cardContentWrapper.appendChild(cardHeader);
 
     var cardContent = document.createElement('div');
@@ -63,15 +63,10 @@ function addCard(characterData) {
         updateCardNumbers();
     }
     card.appendChild(deleteButton);
-    
-    /*
+
     card.addEventListener("click", function() {
-        var newPage = window.open("", "_blank"); // Открываем новое окно (плейсхолдер покачто)
-        var cardHtml = "<!DOCTYPE html><html lang='en'><head><meta charset='UTF-8'><meta name='viewport' content='width=device-width, initial-scale=1.0'><title>Карточка</title><link rel='stylesheet' href='style.css'></head><body><h1>" + cardHeader.textContent + "</h1><p>" + cardContent.textContent + "</p></body></html>";
-        newPage.document.write(cardHtml); // Записываем HTML-код карточки в новое окно
-        newPage.document.close(); // Закрываем запись
+        window.open(`/test/char.html?id=${characterData.id}`);
     });
-    */
 
     document.getElementById("cardContainer").appendChild(card);
 }

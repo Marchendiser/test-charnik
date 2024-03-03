@@ -113,7 +113,7 @@ function applyCharacterDataToPage() {
     // Former traitData1/traitData2
     document.getElementById("perstrait").value = CHAR_DATA.personality.perstrait;
     document.getElementById("ideal").value = CHAR_DATA.personality.ideal;
-    document.getElementById("affection").value = CHAR_DATA.personality.affect;
+    document.getElementById("affection").value = CHAR_DATA.personality.affection;
     document.getElementById("weakness").value = CHAR_DATA.personality.weakness;
 
     //former player status data (CharStatusData)
@@ -137,8 +137,8 @@ function applyCharacterDataToPage() {
     document.getElementById("otherabcontent").value = CHAR_DATA.otherAbilities;
 
     //Former castData (перенести сюда spellSave + spellAtk)
-    document.getElementById("castclass").value = CHAR_DATA.casterData.casterClass;
-    document.getElementById("castab").value = CHAR_DATA.casterData.ability;
+    document.getElementById("casterClass").value = CHAR_DATA.casterData.casterClass;
+    document.getElementById("ability").value = CHAR_DATA.casterData.ability;
 
     document.getElementById("spellSave").innerText = CHAR_DATA.casterData.spellSave;
     document.getElementById("spellAtk").innerText = CHAR_DATA.casterData.spellAtk;
@@ -182,7 +182,7 @@ armorClassElem.addEventListener('input', event => {
 });
 
 const charSpeedElem = document.getElementById("speed");
-armorClassElem.addEventListener('input', event => {
+charSpeedElem.addEventListener('input', event => {
     CHAR_DATA.speed = event.target.value;
 });
 
@@ -232,7 +232,7 @@ otherAbContent.addEventListener("input", function(event){
 const castContent = document.getElementById("caststat");
 
 castContent.addEventListener("input", function(event){
-    CHAR_DATA[event.target.name] = event.target.value;
+    CHAR_DATA.casterData[event.target.name] = event.target.value;
     saveCharDataUpdate();
 })
     
@@ -241,7 +241,7 @@ castContent.addEventListener("input", function(event){
 const spellContent = document.getElementById("spelllist");
 
 spellContent.addEventListener("input", function(event){
-    CHAR_DATA[event.target.name] = event.target.value;
+    CHAR_DATA.spells[event.target.name] = event.target.value;
     saveCharDataUpdate();
 })
 
@@ -467,7 +467,7 @@ function getAbilityRelatedElementIds(abilityName) {
 }
 
 function updateCastStats() {
-    let castAbility = document.getElementById("castab");
+    let castAbility = document.getElementById("ability");
     let spellSave = document.getElementById("spellSave");
     let spellAtk = document.getElementById("spellAtk");
     let prof = document.getElementById("bonusnumber").textContent;
