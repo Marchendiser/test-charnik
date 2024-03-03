@@ -113,7 +113,7 @@ function applyCharacterDataToPage() {
     // Former traitData1/traitData2
     document.getElementById("perstrait").value = CHAR_DATA.personality.perstrait;
     document.getElementById("ideal").value = CHAR_DATA.personality.ideal;
-    document.getElementById("affect").value = CHAR_DATA.personality.affect;
+    document.getElementById("affection").value = CHAR_DATA.personality.affect;
     document.getElementById("weakness").value = CHAR_DATA.personality.weakness;
 
     //former player status data (CharStatusData)
@@ -140,8 +140,8 @@ function applyCharacterDataToPage() {
     document.getElementById("castclass").value = CHAR_DATA.casterData.casterClass;
     document.getElementById("castab").value = CHAR_DATA.casterData.ability;
 
-    document.getElementById("spellSave") = CHAR_DATA.casterData.spellSave;
-    document.getElementById("spellAtk") = CHAR_DATA.casterData.spellAtk;
+    document.getElementById("spellSave").innerText = CHAR_DATA.casterData.spellSave;
+    document.getElementById("spellAtk").innerText = CHAR_DATA.casterData.spellAtk;
 
     //Former spellList
     document.getElementById("cantripcontent").value = CHAR_DATA.spells.cantrip;
@@ -165,9 +165,10 @@ info.addEventListener("input", function(event){
 })
 
 // сейв персональных черт и пассивных абилок
-const CHARACTER_PERSONALITY = ["perstrait", "ideal", "affection", "wakness"];
+const CHARACTER_PERSONALITY = ["perstrait", "ideal", "affection", "weakness"];
 CHARACTER_PERSONALITY.forEach(value => {
     const elem = document.getElementById(value);
+    console.log("Char personality", value, elem)
     elem.addEventListener("input", function(event) {
         CHAR_DATA.personality[value] = event.target.value;
         saveCharDataUpdate();
@@ -175,12 +176,26 @@ CHARACTER_PERSONALITY.forEach(value => {
 })
 
 //сейв и загрузка боевых-статов инпутов
-const charStatus = document.getElementById("status");
+const armorClassElem = document.getElementById("armorClass");
+armorClassElem.addEventListener('input', event => {
+    CHAR_DATA.armorClass = event.target.value;
+});
 
-charStatus.addEventListener("input", function(event){
-    CHAR_DATA[event.target.name] = event.target.value;
-    saveCharDataUpdate();
-})
+const charSpeedElem = document.getElementById("speed");
+armorClassElem.addEventListener('input', event => {
+    CHAR_DATA.speed = event.target.value;
+});
+
+const CHARACTER_HEALTH_DATA = {'curhits': 'current', 'maxhits': 'maximum', 'temphits': 'temporal', 'hitdie': 'hitDie'};
+for (const healthPropertyId in CHARACTER_HEALTH_DATA) {
+    const charHealthProperty = CHARACTER_HEALTH_DATA[healthPropertyId];
+    const elem = document.getElementById(healthPropertyId);
+    console.log("Char health elem", healthPropertyId, elem)
+    elem.addEventListener("input", function(event) {
+        CHAR_DATA.health[charHealthProperty] = event.target.value;
+        saveCharDataUpdate();
+    });
+}
 
 //сейв текстового окна прочих владений
 const otherProfContent = document.getElementById("otherprofcontent");
@@ -297,12 +312,12 @@ function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
     const abilityElementIds = getAbilityRelatedElementIds(abilityName);
 
     let modificatorValue = getAbilityModificatorValue(ability);
-    console.log(`ability mod for ${ability.id} new value`, modificatorValue);
+    console.log(`ability mod for ${abilityName} new value`, modificatorValue);
 
     const abilityModEl = document.getElementById(abilityElementIds.modElemId);
     abilityModEl.textContent = intValueToString(modificatorValue);
 
-    recalcSaveThrow(ability, CHAR_DATA.profBonus);
+    recalcSaveThrow(abilityName, ability, CHAR_DATA.profBonus);
     
     SKILLS.filter(skill => SKILL_TO_ABILITY[skill] == abilityName)
         .forEach(skill => updateSkillValue(skill))
@@ -317,7 +332,7 @@ function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
 function updateAbilityProficiency(abilityName, input) {
     const ability = CHAR_DATA.abilities[abilityName];
     ability.proficiency = input.checked;
-    recalcSaveThrow(ability, CHAR_DATA.profBonus);
+    recalcSaveThrow(abilityName, ability, CHAR_DATA.profBonus);
 }
 
 function getAbilityModificatorValue(ability) {
@@ -421,11 +436,12 @@ function bonusup() {
 }
 
 function recalcSaveThrowsOnProfBonusChange(profBonusNewValue) {
-    ABILITIES.forEach(ability => recalcSaveThrow(CHAR_DATA.abilities[ability], profBonusNewValue));
+    ABILITIES.forEach(abilityName => recalcSaveThrow(abilityName, CHAR_DATA.abilities[abilityName], profBonusNewValue));
 }
 
-function recalcSaveThrow(ability, profBonus) {
-    const saveThrowElemId = getAbilityRelatedElementIds(ability.id).saveThrowElemId;
+function recalcSaveThrow(abilityName, ability, profBonus) {
+    console.log("Recalc save throw", ability, profBonus);
+    const saveThrowElemId = getAbilityRelatedElementIds(abilityName).saveThrowElemId;
     const abilitySaveThrowEl = document.getElementById(saveThrowElemId);
     let saveThrow = getAbilityModificatorValue(ability);
     if (ability.proficiency) {

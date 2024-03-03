@@ -28,7 +28,7 @@
     <div id="statwrap" class=""> <!-- статус персонажа-->
         <div id="status">
             <div class="status">
-                <p><input type="text" name="armclass" id="armorClass" placeholder="10"></p>
+                <p><input type="text" name="armorClass" id="armorClass" placeholder="10"></p>
                 <h2>КД</h2>
             </div>
             <div class="status">
@@ -40,15 +40,15 @@
                 <h2>Инициатива</h2>            
             </div>
             <div class="status">
-                <p><span><input type="text" name="curhits" id="curhits" placeholder="0"> </span><span>/ </span><span><input type="text" name="maxhits" id="maxhits" placeholder="0"></span></p>
+                <p><span><input type="text" name="health.current" id="curhits" placeholder="0"> </span><span>/ </span><span><input type="text" name="health.maximum" id="maxhits" placeholder="0"></span></p>
                 <h2>Текущие хиты</h2>
             </div>
             <div class="status">
-                <p><input type="text" name="temphits" id="temphits" placeholder="0"></p>
+                <p><input type="text" name="health.temporal" id="temphits" placeholder="0"></p>
                 <h2>Временные хиты</h2>
             </div>
             <div class="status">
-                <p><input type="text" name="hitdie" id="hitdie" placeholder="1d8"></p>
+                <p><input type="text" name="health.hitDie" id="hitdie" placeholder="1d8"></p>
                 <h2>Кости хитов</h2>
             </div>
             <div class="desaves">
@@ -164,13 +164,13 @@
             </div>
             <div id="otherprof"> <!-- другие владения-->
                 <h1 class="title">Прочие владения и языки</h1>
-                <textarea name="otherprof" id="otherprofcontent" cols="28" rows="10"></textarea>
+                <textarea name="otherProf" id="otherprofcontent" cols="28" rows="10"></textarea>
             </div>
         </div>
         <div> <!-- инвентари-->
             <div id="inventory" align="right"> 
                 <h1 class="title">Экипировка</h1>
-                <textarea name="inventory" id="equipment" cols="80" rows="20"></textarea>
+                <textarea name="equipment" id="equipment" cols="80" rows="20"></textarea>
             </div>
             <div id="inventory" align="right">
                 <h1 class="title">Инвентарь</h1>
@@ -183,12 +183,12 @@
                 <div class="perstrait"><h1 class="title">Идеалы</h1><textarea name="ideal" id="ideal" cols="30" rows="10"></textarea></div>
             </div>
             <div id="perstrait2">
-                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="affect" id="affection" cols="30" rows="10"></textarea></div>
+                <div class="perstrait"><h1 class="title">Привязанности</h1><textarea name="affection" id="affection" cols="30" rows="10"></textarea></div>
                 <div class="perstrait"><h1 class="title">Слабости</h1><textarea name="weakness" id="weakness" cols="30" rows="10"></textarea></div>
             </div>
             <div id="otherab">
                 <h1 class="title">Умения и способности</h1>
-                <textarea name="otherab" id="otherabcontent" cols="60" rows="10"></textarea>
+                <textarea name="otherAbilities" id="otherabcontent" cols="60" rows="10"></textarea>
             </div>
         </div>
     </div>

@@ -42,7 +42,7 @@ function addCard(characterData) {
     var cardHeader = document.createElement("a");
     cardHeader.textContent = "Новый персонаж " + characterData.id;
     cardHeader.className = "card-header";
-    cardHeader.href = `/test/char.html?id=${characterData.id}`
+    cardHeader.href = `/char.html?id=${characterData.id}`
     cardContentWrapper.appendChild(cardHeader);
 
     var cardContent = document.createElement('div');
