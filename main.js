@@ -1,6 +1,6 @@
 
 // DATA SECTION (should come from localStorage on window load)
-let cardCounter = 0;
+let cardCounter = 1;
 let characters = { }; // like map: {'1': {char data (id=1)}, '2': {char data (id=2)} ...}
 
 
