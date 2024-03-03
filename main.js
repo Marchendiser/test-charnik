@@ -42,7 +42,7 @@ function addCard(characterData) {
     var cardHeader = document.createElement("a");
     cardHeader.textContent = "Новый персонаж " + characterData.id;
     cardHeader.className = "card-header";
-    cardHeader.href = `/char.html?id=${characterData.id}`
+    cardHeader.href = `/test/char.html?id=${characterData.id}`
     cardContentWrapper.appendChild(cardHeader);
 
     var cardContent = document.createElement('div');
@@ -147,38 +147,14 @@ function getInitCharData (charId) {
         },
     
         profBonus: 2,
-        abilities: [
-            {
-                abilityId: "strenght",
-                value: 8,
-                proficiency: false
-            },
-            {
-                abilityId: "dexterity",
-                value: 8,
-                proficiency: false
-            },
-            {
-                abilityId: "constitution",
-                value: 8,
-                proficiency: false
-            },
-            {
-                abilityId: "inteligence",
-                value: 8,
-                proficiency: false
-            },
-            {
-                abilityId: "wisdom",
-                value: 8,
-                proficiency: false
-            },
-            {
-                abilityId: "charisma",
-                value: 8,
-                proficiency: false
-            }  
-        ],
+        abilities: {
+            "STR": {value: 8, proficiency: false}, 
+            "DEX": {value: 8, proficiency: false}, 
+            "CON": {value: 8, proficiency: false}, 
+            "INT": {value: 8, proficiency: false}, 
+            "WIS": {value: 8, proficiency: false}, 
+            "CHA": {value: 8, proficiency: false}
+        },
         skills: [],
         otherAbilities: "",
         otherProf: "",

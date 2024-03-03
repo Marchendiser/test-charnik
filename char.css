@@ -59,13 +59,13 @@ header {
 #race:focus {
     outline: none;
 }
-#claslvl {
+#class-lvl {
     border: none;
     border-bottom: 2px solid black;
     font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 16px;
 }
-#claslvl:focus {
+#class-lvl:focus {
     outline: none;
 }
 #age {

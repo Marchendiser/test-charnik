@@ -17,6 +17,10 @@ form {
     font-family: impact;
     font-size: 38px;
 }
+a {
+    text-decoration: none;
+    color: black;
+}
 #logout {
     float: right;
     margin-top: 3px ;

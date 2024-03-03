@@ -115,6 +115,45 @@ function applyCharacterDataToPage() {
     document.getElementById("ideal").value = CHAR_DATA.personality.ideal;
     document.getElementById("affect").value = CHAR_DATA.personality.affect;
     document.getElementById("weakness").value = CHAR_DATA.personality.weakness;
+
+    //former player status data (CharStatusData)
+    document.getElementById("armorClass").value = CHAR_DATA.armorClass;
+    document.getElementById("speed").value = CHAR_DATA.speed;
+    document.getElementById("curhits").value = CHAR_DATA.health.current;
+    document.getElementById("maxhits").value = CHAR_DATA.health.maximum;
+    document.getElementById("temphits").value = CHAR_DATA.health.temporal;
+    document.getElementById("hitdie").value = CHAR_DATA.health.hitDie;
+
+    //Former otherProfData
+    document.getElementById("otherprofcontent").value = CHAR_DATA.otherProf;
+
+    //Former equipData
+    document.getElementById("equipment").value = CHAR_DATA.equipment;
+
+    //Former invData
+    document.getElementById("inventorycontent").value = CHAR_DATA.inventory;
+
+    //Former otherAbData
+    document.getElementById("otherabcontent").value = CHAR_DATA.otherAbilities;
+
+    //Former castData (перенести сюда spellSave + spellAtk)
+    document.getElementById("castclass").value = CHAR_DATA.casterData.casterClass;
+    document.getElementById("castab").value = CHAR_DATA.casterData.ability;
+
+    document.getElementById("spellSave") = CHAR_DATA.casterData.spellSave;
+    document.getElementById("spellAtk") = CHAR_DATA.casterData.spellAtk;
+
+    //Former spellList
+    document.getElementById("cantripcontent").value = CHAR_DATA.spells.cantrip;
+    document.getElementById("spells1").value = CHAR_DATA.spells.spells1;
+    document.getElementById("spells2").value = CHAR_DATA.spells.spells2;
+    document.getElementById("spells3").value = CHAR_DATA.spells.spells3;
+    document.getElementById("spells4").value = CHAR_DATA.spells.spells4;
+    document.getElementById("spells5").value = CHAR_DATA.spells.spells5;
+    document.getElementById("spells6").value = CHAR_DATA.spells.spells6;
+    document.getElementById("spells7").value = CHAR_DATA.spells.spells7;
+    document.getElementById("spells8").value = CHAR_DATA.spells.spells8;
+    document.getElementById("spells9").value = CHAR_DATA.spells.spells9;
 } 
 
 //сейв и загрузка инпутов с основной инфой
@@ -136,117 +175,62 @@ CHARACTER_PERSONALITY.forEach(value => {
 })
 
 //сейв и загрузка боевых-статов инпутов
-let CharStatusData = {};
 const charStatus = document.getElementById("status");
-const StatusData = localStorage;
 
 charStatus.addEventListener("input", function(event){
-    CharStatusData[event.target.name] = event.target.value;
-    StatusData.setItem("CharStatusData", JSON.stringify(CharStatusData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (StatusData.getItem("CharStatusData")) {
-    CharStatusData = JSON.parse(StatusData.getItem("CharStatusData"));
-    document.getElementById("armclass").value = CharStatusData.armclass;
-    document.getElementById("speed").value = CharStatusData.speed;
-    document.getElementById("curhits").value = CharStatusData.curhits;
-    document.getElementById("maxhits").value = CharStatusData.maxhits;
-    document.getElementById("temphits").value = CharStatusData.temphits;
-    document.getElementById("hitdie").value = CharStatusData.hitdie;
-}
 
 //сейв текстового окна прочих владений
-let otherProfData = {};
 const otherProfContent = document.getElementById("otherprofcontent");
-const otherData = localStorage;
 
 otherProfContent.addEventListener("input", function(event){
-    otherProfData[event.target.name] = event.target.value;
-    otherData.setItem("otherProfData", JSON.stringify(otherProfData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (otherData.getItem("otherProfData")) {
-    otherProfData = JSON.parse(otherData.getItem("otherProfData"));
-    document.getElementById("otherprofcontent").value = otherProfData.otherprof;
-}
 
 //сейв экипировки и инвенатаря
-let equipData = {};
 const equipContent = document.getElementById("equipment");
-const savedEquip = localStorage;
 
 equipContent.addEventListener("input", function(event){
-    equipData[event.target.name] = event.target.value;
-    savedEquip.setItem("equipData", JSON.stringify(equipData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (savedEquip.getItem("equipData")) {
-    equipData = JSON.parse(savedEquip.getItem("equipData"));
-    document.getElementById("equipment").value = equipData.inventory;
-}
 
-let invData = {};
 const invContent = document.getElementById("inventorycontent");
-const savedInv = localStorage;
 
 invContent.addEventListener("input", function(event){
-    invData[event.target.name] = event.target.value;
-    savedInv.setItem("invData", JSON.stringify(invData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (savedInv.getItem("invData")) {
-    invData = JSON.parse(savedInv.getItem("invData"));
-    document.getElementById("inventorycontent").value = invData.inventory;
-}
 
-
-
-let otherAbData = {}
+// сейв других абилок
 const otherAbContent = document.getElementById("otherabcontent");
-const savedOtherAb = localStorage;
 
 otherAbContent.addEventListener("input", function(event){
-    otherAbData[event.target.name] = event.target.value;
-    savedOtherAb.setItem("otherAbData", JSON.stringify(otherAbData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (savedOtherAb.getItem("otherAbData")) {
-    otherAbData = JSON.parse(savedOtherAb.getItem("otherAbData"));
-    document.getElementById("otherabcontent").value = otherAbData.otherab;
-}
 
 //сейв заклинательных абилок
-let castData = {};
 const castContent = document.getElementById("caststat");
-const savedCast = localStorage;
 
 castContent.addEventListener("input", function(event){
-    castData[event.target.name] = event.target.value;
-    savedCast.setItem("castData", JSON.stringify(castData));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (savedCast.getItem("castData")) {
-    castData = JSON.parse(savedCast.getItem("castData"));
-    document.getElementById("castclass").value = castData.castclass;
-    document.getElementById("castab").value = castData.castab;
-}
-
+    
 //сейв списка заклинаний
-let spellList = {};
+
 const spellContent = document.getElementById("spelllist");
-const savedSpells = localStorage;
 
 spellContent.addEventListener("input", function(event){
-    spellList[event.target.name] = event.target.value;
-    savedSpells.setItem("spellList", JSON.stringify(spellList));
+    CHAR_DATA[event.target.name] = event.target.value;
+    saveCharDataUpdate();
 })
-if (savedSpells.getItem("spellList")) {
-    spellList = JSON.parse(savedSpells.getItem("spellList"));
-    document.getElementById("cantripcontent").value = spellList.cantrip;
-    document.getElementById("spells1").value = spellList.spells1;
-    document.getElementById("spells2").value = spellList.spells2;
-    document.getElementById("spells3").value = spellList.spells3;
-    document.getElementById("spells4").value = spellList.spells4;
-    document.getElementById("spells5").value = spellList.spells5;
-    document.getElementById("spells6").value = spellList.spells6;
-    document.getElementById("spells7").value = spellList.spells7;
-    document.getElementById("spells8").value = spellList.spells8;
-    document.getElementById("spells9").value = spellList.spells9;
-}
+
+
 
 
 
@@ -283,7 +267,7 @@ const ability = (id) => {
 //загрузка значений Характеристик и Чекбоксов Спасбросокв
 function applyAbilityValueFromCharData(abilityScoreElem, abilityName) {
     const ability = CHAR_DATA.abilities[abilityName];
-
+    console.log(abilityName)
     abilityScoreElem.value = ability.value;
 
     if (ability.proficiency) {
@@ -485,13 +469,7 @@ function updateCastStats() {
         spellSave.textContent = 8 + parseInt(prof) + parseInt(chamod);
         spellAtk.textContent = parseInt(prof) + parseInt(chamod);
     }
-    let castSpell = [spellSave.textContent, spellAtk.textContent];
-    localStorage.setItem("castSpell", JSON.stringify(castSpell));
-    if (localStorage.getItem("castSpell")){
-        castSpell = JSON.parse(localStorage.getItem("castSpell"))
-        spellSave.textContent = castSpell[0];
-        spellAtk.textContent = castSpell[1];
-    }
+    saveCharDataUpdate();
 }
 
 function updatePassivePersep(){
@@ -500,11 +478,5 @@ function updatePassivePersep(){
 
     passivePersep.textContent = 10 + parseInt(persepScore);
 
-    let passivePersepScore = [passivePersep.textContent];
-    localStorage.setItem("passivePersepScore", JSON.stringify(passivePersepScore));
-    if (localStorage.getItem("passivePersepScore")){
-        passivePersepScore = JSON.parse(localStorage.getItem("passivePersepScore"));
-        passivePersep.textContent = passivePersepScore[0];
-    }
 }
 
