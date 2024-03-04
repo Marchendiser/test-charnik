@@ -5,6 +5,40 @@ header {
     text-align: center;
     height: 40px;
 }
+#logout {
+    float: right;
+    margin-top: 3px ;
+    margin-right: 16px;
+    background-color: #af574c; 
+    border: none;
+    color: white;
+    padding: 10px 20px; /* Поля вокруг текста кнопки */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer; /* Курсор при наведении на кнопку */
+    border-radius: 5px; /* Закругленные углы */
+}
+#logout:hover {
+    background-color: #8b3633;
+}
+#back {
+    float: left;
+    margin-top: 3px ;
+    margin-left: 16px;
+    background-color: #4c66af; 
+    border: none;
+    color: white;
+    padding: 10px 20px; /* Поля вокруг текста кнопки */
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    cursor: pointer; /* Курсор при наведении на кнопку */
+    border-radius: 5px; /* Закругленные углы */
+}
+#back:hover {
+    background-color: #344880;
+}
 #abilities {
     margin: 8px;
 }

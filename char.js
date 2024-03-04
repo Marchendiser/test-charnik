@@ -496,3 +496,11 @@ function updatePassivePersep(){
 
 }
 
+function logOut(){
+    if(confirm("Вы уверены что хотите выйти?"))
+        window.location = "login.html"
+}
+
+function goBack(){
+    window.location = "main.html"
+}

@@ -22,7 +22,7 @@ window.addEventListener('load', ev => {
 
 function logOut(){
     if(confirm("Вы уверены что хотите выйти?"))
-        window.location = "/test/login.html"
+        window.location = "login.html"
 }
 
 //создание ячеек новых персонажей
@@ -65,7 +65,7 @@ function addCard(characterData) {
     card.appendChild(deleteButton);
 
     card.addEventListener("click", function() {
-        window.open(`/test/char.html?id=${characterData.id}`);
+        window.open(`char.html?id=${characterData.id}`);
     });
 
     document.getElementById("cardContainer").appendChild(card);
