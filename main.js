@@ -13,9 +13,10 @@ window.addEventListener('load', ev => {
     if (characters == null || characters == undefined) {
         characters = {};
     }
+    updateCardCounter()
     for (const charId in characters) {
         console.log("WTF", charId);
-       addCard(characters[charId]); 
+        addCard(characters[charId]); 
     }
 });
 
@@ -28,8 +29,6 @@ function logOut(){
 //создание ячеек новых персонажей
 
 function addNewCard() {    
-    
-    
     var characterData = makeNewCharacterAndSaveToStorage(cardCounter++);
     addCard(characterData);
 }
@@ -40,13 +39,12 @@ function addCard(characterData) {
     card.className = "card";
     var cardContentWrapper = document.createElement("div")
     var cardHeader = document.createElement("div");
-    cardHeader.textContent = "Новый персонаж " + characterData.id;
+    cardHeader.textContent = characterData.name || "Новый персонаж " + characterData.id;
     cardHeader.className = "card-header";
-    //cardHeader.href = `/test/char.html?id=${characterData.id}`;
     cardContentWrapper.appendChild(cardHeader);
 
     var cardContent = document.createElement('div');
-    cardContent.textContent = "Раса, класс, уровень";
+    cardContent.textContent = characterData.race + ", " + characterData.classAndLevel || "Раса, класс, уровень";
     cardContent.className = "card-content";
     cardContentWrapper.appendChild(cardContent);
 
@@ -57,10 +55,9 @@ function addCard(characterData) {
     deleteButton.className = "delete-button";
     deleteButton.onclick = function (event) {
         event.stopPropagation();
-
         deleteCrrespondingCharacter(characterData.id);
         card.parentNode.removeChild(card);
-        updateCardNumbers();
+        updateCardNumbers(characterData);
     }
     card.appendChild(deleteButton);
 
@@ -71,33 +68,36 @@ function addCard(characterData) {
     document.getElementById("cardContainer").appendChild(card);
 }
 //обновлялка порядкового номера карточки
-function updateCardNumbers() {
+function updateCardNumbers(characterData) {
     var cards = document.getElementsByClassName("card");
     for (var i = 0; i < cards.length; i++) {
         var deleteButton = cards[i].querySelector("p");
-        cards[i].childNodes[0].childNodes[0].textContent = "Новый персонаж " + (i + 1);
+        cards[i].childNodes[0].childNodes[0].textContent = characterData.name || "Новый персонаж " + (i + 1);
         cards[i].appendChild(deleteButton);
     }
     cardCounter = cards.length;
+    if (cards.length == 0) {
+        cardCounter = 1;
+    }
   }
 
 // Функция для сохранения карточек в localStorage?
 function makeNewCharacterAndSaveToStorage(charId) {
     let initCharData = getInitCharData(charId);
-
     characters[initCharData.id] = initCharData;
-
     localStorage.setItem("characters", JSON.stringify(characters));
-
     return initCharData;
 }
 
 function deleteCrrespondingCharacter(charId) {
     delete characters[charId];
-
     localStorage.setItem("characters", JSON.stringify(characters))
+    updateCardCounter()
 }
 
+function updateCardCounter() {
+    cardCounter = Object.keys(characters).length + 1;
+}
 
 function saveCardsToLocalStorage() {
     var cardsData = [];

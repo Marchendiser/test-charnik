@@ -73,7 +73,7 @@ function loadCharacterListDataFromLocalStorage(charId) {
     console.log("our charact3er", data)
 
     if (data ==  null || data == undefined) {
-        window.location = "/main.html"
+        window.location = "main.html"
     } 
     CHAR_DATA = data;
 
