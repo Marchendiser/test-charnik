@@ -1,18 +1,15 @@
 
 // DATA SECTION (should come from localStorage on window load)
-let cardCounter = 1;
 let characters = { }; // like map: {'1': {char data (id=1)}, '2': {char data (id=2)} ...}
 
 //так бля, ну смотри, все просто. 
 //здесь дефайним сиквенс айдишек, который будет из локал стоража, 
 //и количество новых персов, его на виндоу лоде считаем
-let charIdSeq;
 let newCharactersCount = 0;
 
 
 // on load 
 window.addEventListener('load', ev => {
-    charIdSeq = parseInt(localStorage.getItem('charIdSeq')) || 0;;
     // get the cards from local storage, and apply this data to the page, to render all the cards. 
     // Also, count the cards  to get the char Id counter in place. (or even read own property for that)
     characters = JSON.parse(localStorage.getItem("characters"));
@@ -44,7 +41,9 @@ function logOut(){
 function addNewCard() {    
     newCharactersCount++
     // сюда теппрь должно идти айди, он сука должен быть уникальным
-    var characterData = makeNewCharacterAndSaveToStorage(charIdSeq++);
+    const charId = getNextCharId();
+    console.log("New character id ", charId);
+    const characterData = makeNewCharacterAndSaveToStorage(charId);
     addCard(characterData);
 }
 
@@ -52,6 +51,9 @@ function addCard(characterData) {
     console.log("add card for character", characterData, characterData.id) 
     var card = document.createElement("div");
     card.className = "card";
+    if (characterData.name) {
+        card.name = characterData.name;
+    }
     var cardContentWrapper = document.createElement("div")
     var cardHeader = document.createElement("div");
     cardHeader.textContent = characterData.name || "Новый персонаж " + newCharactersCount; // <- сврой каунтер, не ид
@@ -72,7 +74,7 @@ function addCard(characterData) {
         event.stopPropagation();
         deleteCrrespondingCharacter(characterData.id);
         card.parentNode.removeChild(card);
-        updateCardNumbers(characterData);
+        updateCardNumbers();
     }
     card.appendChild(deleteButton);
 
@@ -82,19 +84,6 @@ function addCard(characterData) {
 
     document.getElementById("cardContainer").appendChild(card);
 }
-//обновлялка порядкового номера карточки
-function updateCardNumbers(characterData) {
-    var cards = document.getElementsByClassName("card");
-    for (var i = 0; i < cards.length; i++) {
-        var deleteButton = cards[i].querySelector("p");
-        cards[i].childNodes[0].childNodes[0].textContent = characterData.name || "Новый персонаж " + (i + 1);
-        cards[i].appendChild(deleteButton);
-    }
-    cardCounter = cards.length;
-    if (cards.length == 0) {
-        cardCounter = 1;
-    }
-  }
 
 // Функция для сохранения карточек в localStorage?
 function makeNewCharacterAndSaveToStorage(charId) {
@@ -106,37 +95,45 @@ function makeNewCharacterAndSaveToStorage(charId) {
 
 function deleteCrrespondingCharacter(charId) {
     const charToDelete = characters[charId];
-// проверка, если это был новый перс, то декрис каунтера и перерасчет чисел
+    // проверка, если это был новый перс, то декрис каунтера и перерасчет чисел
     if (!charToDelete.name??false) {
+        console.log("DELETE NAME", charToDelete.name)
         newCharactersCount--;
         // гу и вызови здесь функцию свою, хз какую
     }
     delete characters[charId];    
     localStorage.setItem("characters", JSON.stringify(characters));
-   // updateCardCounter()
 }
 
-/*function updateCardCounter() { //хуита, перепиши чтобы использовал каунтер
-    cardCounter = newCharactersCount + 1;
-}*/
-
-function saveCardsToLocalStorage() {
-    var cardsData = [];
-    var cards = document.getElementsByClassName("card");
-    for (var i = 0; i < cards.length; i++) {
-        var cardHeader = cards[i].childNodes[0].childNodes[0].textContent;
-        var cardContent = cards[i].childNodes[0].childNodes[0].textContent;
-        cardsData.push({header: cardHeader, content: cardContent}); 
+//обновлялка порядкового номера карточки
+function updateCardNumbers() {
+    const cards = document.getElementsByClassName("card");
+    console.log("selected cards", cards)
+    let tempCounter = 0;
+    for (let i = 0; i < cards.length; i++) {
+        var card = cards[i];
+        console.log(`the card (${card.name})`, card)
+        if (!card.name??false) {
+            console.log(`update name of the card (${card.name})`, card)
+            const cardHeader = card.getElementsByClassName('card-header')[0];
+            cardHeader.textContent = "Новый персонаж " + (++tempCounter);
+        } 
     }
-    localStorage.setItem("cards",JSON.stringify(cardsData));
-}
-// Функция для загрузки карточек из localStorage
-
-
-// when making new card, we init new character data, and save it into the localStorage. 
-
+  }
 
 // FUNCTIONS
+function getNextCharId() {
+    console.log("getting new char id")
+    let lastCharId = localStorage.getItem('charIdSeq');
+    if (lastCharId === null || lastCharId === undefined) {
+        lastCharId = 0;
+    }
+    const nextCharId = parseInt(lastCharId) + 1;
+    localStorage.setItem('charIdSeq', nextCharId);
+    return nextCharId;
+}
+
+
 function getInitCharData (charId) {
     return {
         id: charId,
