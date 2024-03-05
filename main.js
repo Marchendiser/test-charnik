@@ -12,14 +12,15 @@ let newCharactersCount = 0;
 
 // on load 
 window.addEventListener('load', ev => {
-    charIdSeq = parseInt(localStorage.getItem('charIdSeq'));
+    charIdSeq = parseInt(localStorage.getItem('charIdSeq')) || 0;;
     // get the cards from local storage, and apply this data to the page, to render all the cards. 
     // Also, count the cards  to get the char Id counter in place. (or even read own property for that)
     characters = JSON.parse(localStorage.getItem("characters"));
     if (characters == null || characters == undefined) {
         characters = {};
     }
-    updateCardCounter() // <- это нахуй 
+    console.log(newCharactersCount);
+    //updateCardCounter() // <- это нахуй 
     for (const charId in characters) {
         const character = characters[charId];
         // проверяем,новый ли это перс, ксли да, то добавляем +1 к каунтеру
@@ -41,6 +42,7 @@ function logOut(){
 //создание ячеек новых персонажей
 
 function addNewCard() {    
+    newCharactersCount++
     // сюда теппрь должно идти айди, он сука должен быть уникальным
     var characterData = makeNewCharacterAndSaveToStorage(charIdSeq++);
     addCard(characterData);
@@ -52,7 +54,6 @@ function addCard(characterData) {
     card.className = "card";
     var cardContentWrapper = document.createElement("div")
     var cardHeader = document.createElement("div");
-    // о нихуя, заебись оператор || использовал
     cardHeader.textContent = characterData.name || "Новый персонаж " + newCharactersCount; // <- сврой каунтер, не ид
     cardHeader.className = "card-header";
     cardContentWrapper.appendChild(cardHeader);
@@ -76,7 +77,7 @@ function addCard(characterData) {
     card.appendChild(deleteButton);
 
     card.addEventListener("click", function() {
-        window.open(`char.html?id=${characterData.id}`);
+        window.location = `char.html?id=${characterData.id}`;
     });
 
     document.getElementById("cardContainer").appendChild(card);
@@ -110,13 +111,14 @@ function deleteCrrespondingCharacter(charId) {
         newCharactersCount--;
         // гу и вызови здесь функцию свою, хз какую
     }
-    delete characters[charId];    localStorage.setItem("characters", JSON.stringify(characters))
-    updateCardCounter()
+    delete characters[charId];    
+    localStorage.setItem("characters", JSON.stringify(characters));
+   // updateCardCounter()
 }
 
-function updateCardCounter() {. //хуита, перепиши чтобы использовал каунтер
-    cardCounter = Object.keys(characters).length + 1;
-}
+/*function updateCardCounter() { //хуита, перепиши чтобы использовал каунтер
+    cardCounter = newCharactersCount + 1;
+}*/
 
 function saveCardsToLocalStorage() {
     var cardsData = [];
