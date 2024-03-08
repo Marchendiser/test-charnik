@@ -266,16 +266,19 @@ header {
     border: 4px double black;
     border-radius: 5px;
     height: max-content;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 .perstrait {
     border: 4px double black;
     border-radius: 5px;
     margin-right: 6px;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 .perstrait {
     border: 4px double black;
     border-radius: 5px;
     margin-right: 6px;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 #perstrait1 {
     display: flex;
@@ -291,6 +294,7 @@ header {
     margin: 8px;
     min-width: 484px;
     width: max-content;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 #otherab textarea {
     min-width: 476px;
@@ -317,6 +321,7 @@ header {
     border: 4px double black;
     border-radius: 5px;
     max-width: max-content;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 .spells {
     margin: 8px;
@@ -324,6 +329,7 @@ header {
     border-radius: 5px;
     max-width: max-content;
     margin-right: 48px;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 .hidden {
     display: none;
@@ -350,7 +356,7 @@ textarea:focus {
     background-image: url("/img/Безымянный.png");
     background-repeat: no-repeat;
     background-position: center;
-    background-size: 2800px 110px;
+    background-size: 2100px 110px;
     filter: brightness(115%) grayscale(10%) drop-shadow(4px 12px 2px #000000);
 }
 #showspell {
