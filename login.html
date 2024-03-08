@@ -4,17 +4,19 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login-Test</title>
+    <title>Login</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <form id="main-form" method="post" align="center">
+        <h2 align="center">Доска персонажей</h2>
         <label for="login">Логин:</label>
         <input type="text" name="login" placeholder="Логин" id="login"><br><br>
         <label for="password">Пароль:</label>
         <input type="password" name="pass" placeholder="Пароль" id="pass"><br><br>
-        <div id="error" style="color: rgb(243, 64, 64)"></div>
-        <input type="submit" name="submit" value="Вход">
+        <div id="error" style="color: rgb(207, 37, 37)"></div>
+        <input id="enter" class="button-89" type="submit" name="submit" value="Вход">
+        <a href="#" align="center">Регистрация</a>
     </form>
 
     <script src="login.js"></script>

@@ -21,6 +21,6 @@ function checkForm(event) {
 
     } else {
         alert("Все данные корректно заполнены")
-        window.location = "/test/main.html";
+        window.location = "main.html";
     }
 }

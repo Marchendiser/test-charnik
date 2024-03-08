@@ -5,6 +5,7 @@ const SKILLS = [
     'athletics',
     'acrobatics',
     'stealth',
+    'hands',
     'history',
     'magika',
     'nature',
@@ -25,6 +26,7 @@ const SKILLS = [
 const SKILL_TO_ABILITY = {
     'athletics': "STR",
     'acrobatics': "DEX",
+    'hands': "DEX",
     'stealth': "DEX",
     'history': "INT",
     'magika': "INT",
@@ -42,11 +44,11 @@ const SKILL_TO_ABILITY = {
     'persuation': "CHA"
 }
 
-// Page data. To be synced with local storage, to be loaded from local storage
+// Page data. Синхронизирующаяся с local storage, и загружаемая в local storage
 let CHAR_DATA;
 let dataUpdateInterval;
 
-// Window On load
+// Загрузка страницы
 window.addEventListener("load", ev => {
     const urlParams = new URLSearchParams(window.location.search);
     const charid = urlParams.get('id');
@@ -55,7 +57,7 @@ window.addEventListener("load", ev => {
 
     loadCharacterListDataFromLocalStorage(charid);
 
-    // apply CHAR_DATA to html, set correct values.
+    // apply CHAR_DATA to html, установка нужных значений.
     applyCharacterDataToPage();
     updateCastStats();
 
@@ -102,7 +104,7 @@ function applyCharacterDataToPage() {
     })
     document.getElementById('bonusnumber').textContent = CHAR_DATA.profBonus;
     
-    // Former CharListData
+    // Осн. информация
     document.getElementById("name").value = CHAR_DATA.name;
     document.getElementById("race").value = CHAR_DATA.race;
     document.getElementById("class-lvl").value = CHAR_DATA.classAndLevel;
@@ -110,13 +112,13 @@ function applyCharacterDataToPage() {
     document.getElementById("alignment").value = CHAR_DATA.alignment;
     document.getElementById("exp").value = CHAR_DATA.exp;
 
-    // Former traitData1/traitData2
+    // Черты персонажа
     document.getElementById("perstrait").value = CHAR_DATA.personality.perstrait;
     document.getElementById("ideal").value = CHAR_DATA.personality.ideal;
     document.getElementById("affection").value = CHAR_DATA.personality.affection;
     document.getElementById("weakness").value = CHAR_DATA.personality.weakness;
 
-    //former player status data (CharStatusData)
+    //Боевые значения и статус
     document.getElementById("armorClass").value = CHAR_DATA.armorClass;
     document.getElementById("speed").value = CHAR_DATA.speed;
     document.getElementById("curhits").value = CHAR_DATA.health.current;
@@ -124,26 +126,23 @@ function applyCharacterDataToPage() {
     document.getElementById("temphits").value = CHAR_DATA.health.temporal;
     document.getElementById("hitdie").value = CHAR_DATA.health.hitDie;
 
-    //Former otherProfData
+    //Прочие владения
     document.getElementById("otherprofcontent").value = CHAR_DATA.otherProf;
 
-    //Former equipData
+    //Снаряжение
     document.getElementById("equipment").value = CHAR_DATA.equipment;
-
-    //Former invData
     document.getElementById("inventorycontent").value = CHAR_DATA.inventory;
 
-    //Former otherAbData
+    //Пассивные способности
     document.getElementById("otherabcontent").value = CHAR_DATA.otherAbilities;
 
-    //Former castData (перенести сюда spellSave + spellAtk)
+    //Заклинательные значения
     document.getElementById("casterClass").value = CHAR_DATA.casterData.casterClass;
     document.getElementById("ability").value = CHAR_DATA.casterData.ability;
-
     document.getElementById("spellSave").innerText = CHAR_DATA.casterData.spellSave;
     document.getElementById("spellAtk").innerText = CHAR_DATA.casterData.spellAtk;
 
-    //Former spellList
+    //Список заклинаний
     document.getElementById("cantripcontent").value = CHAR_DATA.spells.cantrip;
     document.getElementById("spells1").value = CHAR_DATA.spells.spells1;
     document.getElementById("spells2").value = CHAR_DATA.spells.spells2;
@@ -156,7 +155,7 @@ function applyCharacterDataToPage() {
     document.getElementById("spells9").value = CHAR_DATA.spells.spells9;
 } 
 
-//сейв и загрузка инпутов с основной инфой
+//сейв инпутов с основной инфой
 const info = document.getElementById("info");
 
 info.addEventListener("input", function(event){
@@ -175,7 +174,7 @@ CHARACTER_PERSONALITY.forEach(value => {
     });
 })
 
-//сейв и загрузка боевых-статов инпутов
+//сейв боевых-статов инпутов
 const armorClassElem = document.getElementById("armorClass");
 armorClassElem.addEventListener('input', event => {
     CHAR_DATA.armorClass = event.target.value;
@@ -245,10 +244,6 @@ spellContent.addEventListener("input", function(event){
     saveCharDataUpdate();
 })
 
-
-
-
-
 //кнопка переключения "страниц"
 var stats = document.getElementById("statwrap");
 var caststats = document.getElementById("caststat");
@@ -269,7 +264,6 @@ function showlist() {
     spellist.classList.add("hidden")
 }
 
-// VALUES UPDATE FUNCTIONS
 const ability = (id) => {
     console.log(`create ability ${id}`)
     return {
@@ -322,7 +316,7 @@ function recalculateFieldsAfterAbilityUpdated(abilityName, ability) {
     SKILLS.filter(skill => SKILL_TO_ABILITY[skill] == abilityName)
         .forEach(skill => updateSkillValue(skill))
 
-    if (ability.id === "DEX") {
+    if (abilityName === "DEX") {
         let initiative = document.getElementById("initiative");
         initiative.textContent = intValueToString(modificatorValue);
     }
@@ -395,8 +389,7 @@ function getSkillValue(skillName) {
     return abilityValue + (charHasSkill ? profBonus : 0);
 }
 
-
-// SET UP PAGE LISTENERS
+// установка EventListener ов
 ABILITIES.forEach(abilityName => {
     console.log("creating listener for ", abilityName)
     const abilityElementIds = getAbilityRelatedElementIds(abilityName);
@@ -434,11 +427,10 @@ function bonusup() {
     updateCastStats()
     updatePassivePersep()
 }
-
+// перерасчёт для спасбросоков
 function recalcSaveThrowsOnProfBonusChange(profBonusNewValue) {
     ABILITIES.forEach(abilityName => recalcSaveThrow(abilityName, CHAR_DATA.abilities[abilityName], profBonusNewValue));
 }
-
 function recalcSaveThrow(abilityName, ability, profBonus) {
     console.log("Recalc save throw", ability, profBonus);
     const saveThrowElemId = getAbilityRelatedElementIds(abilityName).saveThrowElemId;

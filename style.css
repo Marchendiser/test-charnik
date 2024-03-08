@@ -1,75 +1,172 @@
 body {
-    background-color: #263246;
+    background-image:url("/img/Dark-wood-planks-scaled.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
+
+
 form {
-    border: 2px solid #72488b;
-    padding: 8px;
+    background-image: url("/img/parchment.png");
+    background-position: center;
+    background-size: 540px 882px;
+    padding-top: 1px;
     margin: auto;
-    width: fit-content;
-    margin-top: 20px;
-    border-radius: 5%;
-    background-color: #283954;
-    color: #FFC300; 
-    box-shadow: 0px 0px 5px #72488b;
+    width: 412px;
+    height: 278px;
+    text-align: center;
+    margin-top: 60px;
+    font-size: 22px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    filter: drop-shadow(4px 12px 4px #000000) grayscale(20%);
+}
+form input {
+    border: none;
+    background: transparent;
+    border-bottom: 2px solid black;
+    font-size: 18px;
+}
+form input:focus {
+    outline: none;
+}
+form .button-89 {
+  --b: 3px;   /* border thickness */
+  --s: .35em; /* size of the corner */
+  --color: #2c2222;
+  
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 14px;
+  padding-right: 14px;
+  color: var(--color);
+  --_p: var(--s);
+  background:
+    conic-gradient(from 90deg at var(--b) var(--b),#0000 90deg,var(--color) 0)
+    var(--_p) var(--_p)/calc(100% - var(--b) - 2*var(--_p)) calc(100% - var(--b) - 2*var(--_p));
+  transition: .3s linear, color 0s, background-color 0s;
+  outline: var(--b) solid #0000;
+  outline-offset: .6em;
+  font-size: 20px;
+  font-weight: bold;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  cursor: pointer;
+}
+.button-89:hover,
+.button-89:focus-visible{
+  --_p: 0px;
+  outline-color: var(--color);
+  outline-offset: .05em;
+  --color: #460000;
+}
+.button-89:active {
+  background: var(--color);
+  color: #fff;
+}
+form a, a:visited {
+    font-size: 18px;
+    margin-left: 30px;
+    margin-right: -140px;
+    color: rgb(28, 28, 88);
+}
+
+
+header {
+    background-image: url("/img/Безымянный.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    padding: 8px;
+    margin-top: 14px;
+    text-align: center;
+    filter: drop-shadow(4px 12px 4px #000000) contrast(125%);
 }
 .main-text {
-    color:#fff12e;
-    font-family: impact;
-    font-size: 38px;
-}
-a {
-    text-decoration: none;
-    color: black;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 42px;
 }
 #logout {
     float: right;
     margin-top: 3px ;
     margin-right: 16px;
-    background-color: #af574c; /* Зеленый цвет фона */
+    margin-left: -160px;
+   /* background-image: url("/img/parchment.png");
+    background-repeat: no-repeat;
+    background-position: center;
     border: none;
     color: white;
-    padding: 10px 20px; /* Поля вокруг текста кнопки */
+    padding: 10px 20px; 
     text-align: center;
     text-decoration: none;
     font-size: 16px;
-    cursor: pointer; /* Курсор при наведении на кнопку */
-    border-radius: 5px; /* Закругленные углы */
+    cursor: pointer;
+    border-radius: 5px;*/
+    padding: .9rem 1.5rem;
+    border: .2rem solid rgb(0, 0, 0);
+    border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+    color: rgb(212, 212, 212);
+    background: rgba(255, 3, 3, 0.301);
+    cursor: pointer;
+    /*margin-top: 1rem;*/
+    font-size: 1.7rem;
+    transition: all .2s linear;
 }
 #logout:hover {
-    background-color: #8b3633;
+    /*background-color: #8b3633;*/
+    border-radius: 4% 95% 6% 95% / 95% 4% 92% 5%;
+    background: rgba(255, 0, 0, 0.61);
+    border: .2rem dashed rgb(0, 0, 0);
 }
-header {
-    border: 2px solid #72488b;
-    background-color:  #283954;
-    box-shadow: 0px 0px 5px #72488b;
-    padding: 8px;
-    margin: 0 auto;
+#add-button {
+    background-color: #38943b88; /* Зеленый цвет фона */
+    border: 3px dashed #38943b;
+    color: white;
+    padding: 8px 10px; /* Поля вокруг текста кнопки */
     text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 18px;
+    margin: 10px; /* Внешние отступы кнопки */
+    cursor: pointer; /* Курсор при наведении на кнопку */
+    border-radius: 5px; /* Закругленные углы */
+    transition: all linear 0.25s;
+}
+#add-button:hover {
+    background-color: #277529;
+    border: 3px solid #4fce53;
+    transform: scale(1.04);
+}
+#cardContainer {
+    display: grid;
+    margin-right: 18px;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Определяем ширину колонок, которая должна быть минимум 200px, но не более чем заполнять доступное пространство */
+    grid-gap: 12px; /* Пространство между карточками */
 }
 .card {
     width: 280px;
     height: 80px;
-    border: 2px solid #72488b;
-    box-shadow: 0px 0px 5px #72488b;
-    border-radius: 5px;
+    background-image: url("/img/parchment.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 180% 300%;
     padding: 10px;
     margin: 10px;
     display: flex;
     flex-direction: column; /* Устанавливаем направление столбца для элементов внутри карточки */
     justify-content: space-between;
     position: relative;
-    background-color:  #283954;
     cursor: pointer;
+    filter: drop-shadow(4px 12px 4px #000000) grayscale(20%);
+    transition: 0.2s linear;
 }
-#cardContainer {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Определяем ширину колонок, которая должна быть минимум 200px, но не более чем заполнять доступное пространство */
-    grid-gap: 10px; /* Пространство между карточками */
+.card:hover {
+    transform: scale(1.08);
 }
 .delete-button {
-    position: absolute; /* Позиционируем абсолютно относительно родительского элемента */
-    top: 5px; /* Отступ от верхнего края карточки */
-    right: 8px; /* Отступ от правого края карточки */
+    position: absolute;
+    top: 5px; 
+    right: 8px;
     margin: auto;
     font-weight: bold;
     font-size: 20px;
@@ -78,26 +175,10 @@ header {
 }
 .card-header {
     font-weight: bold;
+    margin: 2px;
     font-size: 24px;
 }
 .card-content {
-    font-weight: lighter;
-    color: red;
-    margin-top: 30px;
-}
-.add-button {
-    background-color: #4CAF50; /* Зеленый цвет фона */
-    border: none;
-    color: white;
-    padding: 10px 20px; /* Поля вокруг текста кнопки */
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 10px; /* Внешние отступы кнопки */
-    cursor: pointer; /* Курсор при наведении на кнопку */
-    border-radius: 5px; /* Закругленные углы */
-}
-.add-button:hover {
-    background-color: #3a943d;
+    font-size: 18px;
+    margin-top: 18px;
 }

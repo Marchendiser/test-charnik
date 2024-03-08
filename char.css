@@ -1,3 +1,9 @@
+body {
+    background-image:url("/img/Dark-wood-planks-scaled.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
 header {
     border: 2px solid #000000;
     padding: 8px;
@@ -8,182 +14,60 @@ header {
 #logout {
     float: right;
     margin-top: 3px ;
-    margin-right: 16px;
-    background-color: #af574c; 
-    border: none;
-    color: white;
-    padding: 10px 20px; /* Поля вокруг текста кнопки */
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer; /* Курсор при наведении на кнопку */
-    border-radius: 5px; /* Закругленные углы */
+    margin-right: 24px;
+    padding: 10px 20px;
+    border: .2rem solid rgb(0, 0, 0);
+    border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+    color: rgb(0, 0, 0);
+    background: rgba(202, 0, 0, 0.432);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all .2s linear;
 }
 #logout:hover {
-    background-color: #8b3633;
+    border-radius: 4% 95% 6% 95% / 95% 4% 92% 5%;
+    background: rgba(255, 0, 0, 0.712);
+    border: .2rem dashed rgb(0, 0, 0);
+    color: rgb(212, 212, 212);
 }
 #back {
     float: left;
     margin-top: 3px ;
-    margin-left: 16px;
-    background-color: #4c66af; 
-    border: none;
-    color: white;
-    padding: 10px 20px; /* Поля вокруг текста кнопки */
-    text-align: center;
-    text-decoration: none;
-    font-size: 16px;
-    cursor: pointer; /* Курсор при наведении на кнопку */
-    border-radius: 5px; /* Закругленные углы */
+    margin-left: 24px;
+    padding: 10px 20px; 
+    border: .2rem solid rgb(0, 0, 0);
+    border-radius: 4% 95% 6% 95% / 95% 4% 92% 5%;
+    color: rgb(0, 0, 0);
+    background: rgba(0, 47, 202, 0.432);
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: all .2s linear;
 }
 #back:hover {
-    background-color: #344880;
-}
-#abilities {
-    margin: 8px;
-}
-.ability {
-    margin-bottom: 8px;
-    border: 4px double black;
-    border-radius: 5px;
-    width: 8rem;
-    height: 7rem;
-}
-.ability h2 {
-    font-size: 18px;
-    translate: 0 -12px;
-}
-.ability p {
-    translate: 0 -54px;
-    font-size: 36px;
-}
-.ability input {
-    text-align: center;
-    width: 3rem;
-    font-size: 26px;
-    translate: 0 -18px;
-}
-.abscore {
-    margin-left: 28%;
-    border-radius: 50%;
+    border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+    background: rgba(0, 74, 233, 0.712);
+    border: .2rem dashed rgb(0, 0, 0);
+    color: rgb(212, 212, 212);
 }
 #info {
     display: flex;
     margin: 8px;
     padding: 8px;
-    border-bottom: 2px solid #000000;
+    padding-bottom: 20px;
     border-width: 100%;
     justify-content: space-evenly;
+    font-size: 20px;
 }
-#name {
+.info-input {
     border: none;
+    background-color: rgba(255, 255, 255, 0.24);
     border-bottom: 2px solid black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
     font-size: 16px;
 }
-#name:focus {
+.info-input:focus {
     outline: none;
-}
-#race {
-    border: none;
-    border-bottom: 2px solid black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-}
-#race:focus {
-    outline: none;
-}
-#class-lvl {
-    border: none;
-    border-bottom: 2px solid black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-}
-#class-lvl:focus {
-    outline: none;
-}
-#age {
-    border: none;
-    border-bottom: 2px solid black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-}
-#age:focus {
-    outline: none;
-}
-#alignment {
-    border: none;
-    border-bottom: 2px solid black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-}
-#alignment:focus {
-    outline: none;
-}
-#exp {
-    border: none;
-    border-bottom: 2px solid black;
-    font-family: Georgia, 'Times New Roman', Times, serif;
-    font-size: 16px;
-}
-#exp:focus {
-    outline: none;
-}
-.mod {
-    font-size: 28px;
-}
-#skills {
-    margin: 8px;
-    margin-right: 38px;
-    border: 4px double black;
-    border-radius: 5px;
-    width: max-content;
-    height: max-content;
-    padding: 1em;
-    padding-top: 0;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-}
-.title {
-    text-align: center;
-    font-size: 16px;
-}
-.container {
-    display: flex;
-    justify-content: center;
-}
-#inventory {
-    margin: 8px;
-    margin-right: 38px;
-    border: 4px double black;
-    border-radius: 5px;
-    height: max-content;
-}
-#saves {
-    margin: 8px;
-    margin-left: 20px;
-    border: 4px double black;
-    border-radius: 5px;
-    width: 148px;
-    height: max-content;
-    padding: 1em;
-    padding-top: 0;
-}
-#profbonus {
-    margin: 8px;
-    margin-left: 30px;
-    border: 4px double black;
-    border-radius: 5px;
-    width: 144px;
-    height: max-content;
-    padding: 0 10px;
-}
-#profbonus h2 {
-    width: 56px;
-    font-size: 28px;
-    border: 2px solid black;
-    border-radius: 6px;
-    margin-left: 42px;
-    cursor: pointer;
 }
 #status {
     display: flex;
@@ -206,11 +90,22 @@ header {
     padding-left: 8px;
     padding-right: 8px;
     padding-bottom: 8px;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 #status input[type="text"] {
     text-align: center;
     width: 96px;
     font-size: 21px;
+    background-color: rgba(255, 255, 255, 0.336);
+    border: 2px dashed black;
+    transition: all linear 0.3s;
+}
+#status input[type="text"]:focus {
+    outline: none;
+    border: 2px solid black;
+}
+#initiative, #spellSave, #spellAtk {
+    font-weight: bold;
 }
 .desaves {
     margin: 8px;
@@ -220,9 +115,10 @@ header {
     padding-top: 10px;
     height: 62px;
     width: max-content;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 #suc, #fail {
-    font-size: 16px;
+    font-size: 18px;
     text-align: right;
     padding-right: 22px;
 }
@@ -237,8 +133,117 @@ header {
 .defail {
     accent-color: red;
 }
+.container {
+    display: flex;
+    justify-content: center;
+}
+#abilities {
+    margin: 8px;
+}
+.ability {
+    margin-bottom: 8px;
+    border: 4px double black;
+    border-radius: 5px;
+    width: 8rem;
+    height: 7rem;
+    box-shadow: inset 0px 0px 10px 1px black;
+}
+.ability h2 {
+    font-size: 18px;
+    translate: 0 -12px;
+}
+.ability p {
+    translate: 0 -54px;
+    font-size: 36px;
+}
+.ability input {
+    text-align: center;
+    width: 3rem;
+    font-size: 26px;
+    translate: 0 -18px;
+    background-color: rgba(255, 255, 255, 0.336);
+    border: 2px dashed black;
+    transition: all linear 0.3s;
+}
+.ability input:focus {
+    outline: none;
+    border: 2px solid black;
+}
+.abscore {
+    margin-left: 28%;
+    border-radius: 50%;
+}
+.mod {
+    font-size: 28px;
+}
+#profbonus {
+    margin: 8px;
+    margin-left: 42px;
+    border: 4px double black;
+    border-radius: 5px;
+    width: 144px;
+    height: max-content;
+    padding: 0 10px;
+    box-shadow: inset 0px 0px 10px 1px black;
+}
+#profbonus h2 {
+    width: 56px;
+    font-size: 28px;
+    border: 2px solid black;
+    border-radius: 6px;
+    margin-left: 42px;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.336);
+}
+.title {
+    text-align: center;
+    font-size: 17px;
+}
+#saves {
+    margin: 8px;
+    margin-left: 32px;
+    border: 4px double black;
+    border-radius: 5px;
+    width: 148px;
+    height: max-content;
+    padding: 1em;
+    padding-top: 0;
+    box-shadow: inset 0px 0px 10px 1px black;
+    font-size: 17px;
+}
+#skills {
+    margin: 8px;
+    margin-right: 38px;
+    border: 4px double black;
+    border-radius: 5px;
+    width: max-content;
+    height: max-content;
+    padding: 1em;
+    padding-top: 0;
+    box-shadow: inset 0px 0px 10px 1px black;
+    font-size: 17px;
+}
 .prof {
     accent-color: skyblue;
+}
+#pasper {
+    margin: 8px;
+    margin-top: 0;
+    border: 4px double black;
+    border-radius: 5px;
+    width: max-content;
+    text-align: center;
+    padding-left: 8px;
+    padding-right: 8px;
+    margin-left: -50px;
+    box-shadow: inset 0px 0px 10px 1px black;
+}
+#pasper span {
+    border: 1px solid black;
+    border-radius: 50%;
+    padding: 8px;
+    font-size: 20px;
+    background-color: rgba(255, 255, 255, 0.336);
 }
 #otherprof {
     margin: 8px;
@@ -249,10 +254,18 @@ header {
     min-width: 342px;
     max-width: max-content;
     margin-left: -136px;
+    box-shadow: inset 0px 0px 10px 1px black;
 }
 #otherprof textarea {
     min-width: 340px;
     min-height: 175px;
+}
+#inventory {
+    margin: 8px;
+    margin-right: 38px;
+    border: 4px double black;
+    border-radius: 5px;
+    height: max-content;
 }
 .perstrait {
     border: 4px double black;
@@ -282,29 +295,22 @@ header {
 #otherab textarea {
     min-width: 476px;
 }
-#pasper {
-    margin: 8px;
-    margin-top: 0;
-    border: 4px double black;
-    border-radius: 5px;
-    width: max-content;
-    text-align: center;
-    padding-left: 8px;
-    padding-right: 8px;
-    margin-left: -46px;
-}
-#pasper span {
-    border: 1px solid black;
-    border-radius: 50%;
-    padding: 8px;
-    font-size: 20px;
-}
+
+
+
 #caststat input[type="text"] {
     width: 200px;
 }
 #caststat select {
     font-size: 22px;
     text-align: center;
+    padding-left: 12px;
+    background-color: rgba(255, 255, 255, 0.336);
+    border: 2px dashed black;
+}
+#caststat select:focus {
+    background-color: rgba(255, 255, 255, 0.336);
+    border: 2px solid black;
 }
 #cantrip {
     margin: 8px;
@@ -321,4 +327,65 @@ header {
 }
 .hidden {
     display: none;
+}
+
+textarea {
+    font-size: 16px;
+    background-color: rgba(214, 214, 214, 0.26);
+    border: 1px solid black;
+    /*box-shadow: inset 0px 0px 20px 2px black;*/
+}
+textarea:focus {
+    outline: none;
+}
+#all-wrap {
+    background-image: url("/img/Безымяннdfsdfsfdsfый.png");
+    background-repeat: no-repeat;
+    background-position-y: -120px;
+    background-position-x: center;
+    background-size: 1700px 2000px;
+    filter: contrast(80%) brightness(115%) grayscale(18%) drop-shadow(4px 12px 2px #000000);
+}
+#header-wrap {
+    background-image: url("/img/Безымянный.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 2800px 110px;
+    filter: brightness(115%) grayscale(10%) drop-shadow(4px 12px 2px #000000);
+}
+#showspell {
+    margin-top: 8px;
+    padding: 10px 20px; 
+    border: .2rem solid rgb(0, 0, 0);
+    border-radius: 4% 95% 6% 95% / 95% 4% 92% 5%;
+    color: rgb(0, 0, 0);
+    background: rgba(145, 0, 202, 0.432);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all .2s linear;
+}
+#showspell:hover {
+    border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+    background: rgba(225, 2, 255, 0.664);
+    border: .2rem dashed rgb(0, 0, 0);
+    color: rgb(212, 212, 212);
+}
+#showlist {
+    margin-top: 8px;
+    padding: 10px 20px; 
+    border: .2rem solid rgb(0, 0, 0);
+    border-radius: 95% 4% 97% 5% / 4% 94% 3% 95%;
+    color: rgb(0, 0, 0);
+    background: rgba(158, 216, 0, 0.493);
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+    transition: all .2s linear;
+}
+#showlist:hover {
+    border-radius: 4% 95% 6% 95% / 95% 4% 92% 5%;
+    background: rgba(107, 146, 0, 0.651);
+    border: .2rem dashed rgb(0, 0, 0);
+    color: rgb(255, 255, 255);
 }

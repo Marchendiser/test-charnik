@@ -1,31 +1,26 @@
 
-// DATA SECTION (should come from localStorage on window load)
-let characters = { }; // like map: {'1': {char data (id=1)}, '2': {char data (id=2)} ...}
+// DATA SECTION (берётся из localStorage при загрузке страницы)
+let characters = { }; // как map: {'1': {char data (id=1)}, '2': {char data (id=2)} ...}
 
-//так бля, ну смотри, все просто. 
-//здесь дефайним сиквенс айдишек, который будет из локал стоража, 
-//и количество новых персов, его на виндоу лоде считаем
 let newCharactersCount = 0;
 
 
 // on load 
 window.addEventListener('load', ev => {
-    // get the cards from local storage, and apply this data to the page, to render all the cards. 
-    // Also, count the cards  to get the char Id counter in place. (or even read own property for that)
+    // получение персонажей из local storage, и отображение их на странице. 
+    // +Пересчёт карточек для обновления значения порядкового номера и id.
     characters = JSON.parse(localStorage.getItem("characters"));
     if (characters == null || characters == undefined) {
         characters = {};
     }
-    console.log(newCharactersCount);
-    //updateCardCounter() // <- это нахуй 
+    console.log(newCharactersCount); 
     for (const charId in characters) {
         const character = characters[charId];
         // проверяем,новый ли это перс, ксли да, то добавляем +1 к каунтеру
         if (!character.name??false) {
             newCharactersCount++;
         }
-        console.log("WTF", charId);
-        // и дальше внутри метода аддКарт, если у перса нейм налл, то соответственно, новый перс и юзай каунтер
+        // и дальше внутри метода аддКарт, если имя пусто, то = новый перс и используется каунтер
         addCard(characters[charId]); 
     }
 });
@@ -40,7 +35,6 @@ function logOut(){
 
 function addNewCard() {    
     newCharactersCount++
-    // сюда теппрь должно идти айди, он сука должен быть уникальным
     const charId = getNextCharId();
     console.log("New character id ", charId);
     const characterData = makeNewCharacterAndSaveToStorage(charId);
@@ -56,7 +50,7 @@ function addCard(characterData) {
     }
     var cardContentWrapper = document.createElement("div")
     var cardHeader = document.createElement("div");
-    cardHeader.textContent = characterData.name || "Новый персонаж " + newCharactersCount; // <- сврой каунтер, не ид
+    cardHeader.textContent = characterData.name || "Новый персонаж " + newCharactersCount;
     cardHeader.className = "card-header";
     cardContentWrapper.appendChild(cardHeader);
 
@@ -85,7 +79,7 @@ function addCard(characterData) {
     document.getElementById("cardContainer").appendChild(card);
 }
 
-// Функция для сохранения карточек в localStorage?
+// Функция для сохранения карточек в localStorage
 function makeNewCharacterAndSaveToStorage(charId) {
     let initCharData = getInitCharData(charId);
     characters[initCharData.id] = initCharData;
@@ -95,11 +89,10 @@ function makeNewCharacterAndSaveToStorage(charId) {
 
 function deleteCrrespondingCharacter(charId) {
     const charToDelete = characters[charId];
-    // проверка, если это был новый перс, то декрис каунтера и перерасчет чисел
+    // проверка, если это был новый перс, то уменьшение каунтера и перерасчет чисел
     if (!charToDelete.name??false) {
         console.log("DELETE NAME", charToDelete.name)
         newCharactersCount--;
-        // гу и вызови здесь функцию свою, хз какую
     }
     delete characters[charId];    
     localStorage.setItem("characters", JSON.stringify(characters));
@@ -121,7 +114,7 @@ function updateCardNumbers() {
     }
   }
 
-// FUNCTIONS
+// Порядок id для персонажей
 function getNextCharId() {
     console.log("getting new char id")
     let lastCharId = localStorage.getItem('charIdSeq');
@@ -137,10 +130,10 @@ function getNextCharId() {
 function getInitCharData (charId) {
     return {
         id: charId,
-        name: null, // здесь налл, хотя конечно ебаный джаваскрипт и пустой стринг будет похожим образом воспринимать
-        race: "human",
+        name: null, 
+        race: "Раса",
         age: 20,
-        classAndLevel: "???, 1lvl",
+        classAndLevel: "Класс и уровень",
         alignment: "",
         exp: 0,
         armorClass: 10,
